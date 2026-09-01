@@ -1,0 +1,34 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+  .:
+    dependencies:
+      '@astrojs/cloudflare':
+        specifier: 14.2.5
+        version: 14.2.5
+      '@astrojs/sitemap':
+        specifier: 3.7.3
+        version: 3.7.3
+      '@tailwindcss/vite':
+        specifier: 4.3.3
+        version: 4.3.3
+      astro:
+        specifier: 7.2.9
+        version: 7.2.9
+      tailwindcss:
+        specifier: 4.3.3
+        version: 4.3.3
+    devDependencies:
+      '@astrojs/check':
+        specifier: 0.9.10
+        version: 0.9.10
+      typescript:
+        specifier: 6.0.3
+        version: 6.0.3
+      wrangler:
+        specifier: 4.127.1
+        version: 4.127.1

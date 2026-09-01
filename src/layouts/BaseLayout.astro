@@ -1,0 +1,53 @@
+---
+import '../styles/global.css';
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  image?: string;
+}
+const { title, description, path = '/', image = '/images/jinnah-park-hero.jpg' } = Astro.props;
+const absoluteUrl = Astro.site ? new URL(path, Astro.site).toString() : undefined;
+const absoluteImage = Astro.site ? new URL(image, Astro.site).toString() : undefined;
+---
+<!doctype html>
+<html lang="ur" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#245c35" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {absoluteUrl && <link rel="canonical" href={absoluteUrl} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" />
+    <link rel="icon" href="/favicon-16.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {absoluteUrl && <meta property="og:url" content={absoluteUrl} />}
+    {absoluteImage && <meta property="og:image" content={absoluteImage} />}
+    <meta property="og:locale" content="ur_PK" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>
+      window.__JP_CONSENT__ = (() => {
+        try { return JSON.parse(localStorage.getItem('jp-cookie-consent') || '{}'); } catch { return {}; }
+      })();
+      if (window.__JP_CONSENT__.analytics === true) {
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP';
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-HXM22WWPKP', { anonymize_ip: true });
+      }
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = 'جناح پارک راولپنڈی — وزیٹر گائیڈ، راستہ، اوقات اور آس پاس';
+const pageDescription = 'جناح پارک، چکلالہ کینٹ راولپنڈی کے لیے آزاد وزیٹر گائیڈ: مقام، نقشہ، اوقات، ٹرانسپورٹ، پارکنگ، کھانے، قریبی مقامات اور عام سوالات۔';
+const canonical = Astro.site ? new URL('/', Astro.site).toString() : undefined;
+const image = Astro.site ? new URL('/images/jinnah-park-hero.jpg', Astro.site).toString() : '/images/jinnah-park-hero.jpg';
+
+const attractionSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['TouristAttraction', 'Park'],
+  name: 'Jinnah Park',
+  alternateName: ['جناح پارک', 'Jinnah Park Rawalpindi'],
+  description: pageDescription,
+  ...(canonical ? { url: canonical } : {}),
+  image,
+  telephone: '+92 311 5885849',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Mushtaq Baig Shaheed Road, Chaklala Cantt.',
+    addressLocality: 'Rawalpindi',
+    postalCode: '46000',
+    addressRegion: 'Punjab',
+    addressCountry: 'PK'
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 33.5844,
+    longitude: 73.0735
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.5',
+    reviewCount: '28730',
+    bestRating: '5'
+  },
+  openingHoursSpecification: [{
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+    opens: '06:00',
+    closes: '23:59'
+  }],
+  sameAs: [
+    'https://maps.app.goo.gl/dXD85cQCFkmbErrWA',
+    'https://www.wikidata.org/wiki/Q6202662',
+    'https://commons.wikimedia.org/wiki/Category:Jinnah_Park,_Rawalpindi'
+  ]
+};
+
+const faq = [
+  ['جناح پارک کہاں واقع ہے؟','یہ Mushtaq Baig Shaheed Road، Chaklala Cantt.، Rawalpindi 46000 میں واقع ہے۔ Google Maps پر Jinnah Park Rawalpindi تلاش کرنا سب سے آسان طریقہ ہے۔'],
+  ['پارک کے عام اوقات کیا ہیں؟','متعدد تازہ عوامی لسٹنگز پارک کے عمومی اوقات صبح 6 بجے سے رات 12 بجے تک بتاتی ہیں۔ خصوصی سہولیات، سینما اور ریستوران کے اوقات مختلف ہو سکتے ہیں، اس لیے روانگی سے پہلے تازہ معلومات چیک کریں۔'],
+  ['داخلہ اور دوسری سرگرمیوں کی فیس کتنی ہے؟','پارک، پارکنگ، سینما، بولنگ، رائیڈز اور دوسری سرگرمیوں کی فیس ایک جیسی نہیں ہوتی اور وقت کے ساتھ بدل سکتی ہے۔ اہم اخراجات کے لیے مقام یا متعلقہ آپریٹر سے تازہ تصدیق بہتر ہے۔'],
+  ['کتنا وقت رکھنا مناسب ہے؟','صرف باغیچے اور واک کے لیے تقریباً 1 سے 2 گھنٹے مناسب ہیں؛ کھانے، سینما یا تفریحی سرگرمی شامل ہو تو 3 گھنٹے یا اس سے زیادہ رکھیں۔'],
+  ['کیا خاندان اور بچوں کے لیے مناسب ہے؟','جناح پارک اپنے سبز میدانوں، واکنگ ایریاز اور تفریحی سہولیات کی وجہ سے خاندانوں کے لیے مقبول مقام ہے۔ بچوں کے ساتھ جاتے وقت مصروف اوقات میں اضافی نگرانی مفید رہتی ہے۔']
+];
+const faqSchema = {
+  '@context':'https://schema.org',
+  '@type':'FAQPage',
+  mainEntity: faq.map(([q,a]) => ({ '@type':'Question', name:q, acceptedAnswer:{ '@type':'Answer', text:a } }))
+};
+---
+<BaseLayout title={pageTitle} description={pageDescription} path="/">
+  <script type="application/ld+json" set:html={JSON.stringify(attractionSchema)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+
+  <header class="sticky top-0 z-50 border-b border-green-950/10 bg-[#fffdf8]/95 backdrop-blur">
+    <div class="shell flex min-h-20 items-center justify-between gap-5">
+      <a href="/" class="flex items-center" aria-label="جناح پارک راولپنڈی ہوم"><img src="/logo.svg" alt="جناح پارک راولپنڈی" class="h-14 w-auto" /></a>
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-bold text-green-950">
+        <a href="#تعارف">تعارف</a><a href="#سفر">سفر</a><a href="#کھانا">آس پاس کھانا</a><a href="#مقامات">قریبی مقامات</a><a href="#سوالات">عام سوالات</a>
+      </nav>
+      <a class="btn btn-primary text-sm" href="https://maps.app.goo.gl/dXD85cQCFkmbErrWA" target="_blank" rel="noopener noreferrer">نقشے میں کھولیں</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="relative min-h-[650px] overflow-hidden bg-green-950 text-white">
+      <img src="/images/jinnah-park-hero.jpg" alt="جناح پارک راولپنڈی کا سبز منظر" class="absolute inset-0 h-full w-full object-cover" fetchpriority="high" />
+      <div class="hero-overlay absolute inset-0"></div>
+      <div class="shell relative z-10 flex min-h-[650px] items-end pb-16 pt-24 md:items-center md:pb-10">
+        <div class="max-w-2xl rounded-[30px] border border-white/15 bg-green-950/35 p-7 shadow-2xl backdrop-blur-sm md:p-10">
+          <p class="mb-4 text-sm font-bold text-green-100">راولپنڈی • چکلالہ کینٹ • پنجاب، پاکستان</p>
+          <h1 class="text-5xl font-black leading-tight md:text-7xl">جناح پارک</h1>
+          <p class="mt-2 text-2xl font-semibold text-green-100" dir="ltr">Jinnah Park, Rawalpindi</p>
+          <p class="mt-6 max-w-xl text-lg leading-9 text-white/90">راولپنڈی کے معروف شہری تفریحی مقامات میں سے ایک، جہاں سبز میدان، واکنگ ایریاز، خاندانی سرگرمیاں، سینما اور کھانے کے اختیارات ایک ہی کمپلیکس کے آس پاس ملتے ہیں۔</p>
+          <div class="mt-7 flex flex-wrap gap-3 text-sm">
+            <span class="rounded-full bg-white/12 px-4 py-2">★ 4.5 · 28,730 جائزے</span>
+            <span class="rounded-full bg-white/12 px-4 py-2">☎ +92 311 5885849</span>
+            <span class="rounded-full bg-white/12 px-4 py-2">H3H9+XX · Rawalpindi</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="تعارف" class="shell py-16 md:py-24">
+      <div class="grid gap-8 lg:grid-cols-[1.15fr_.85fr]">
+        <article class="card p-7 md:p-10">
+          <p class="eyebrow">شہر کے بیچ ایک سبز وقفہ</p>
+          <h2 class="section-title mt-2">جناح پارک راولپنڈی کا تعارف</h2>
+          <div class="prose-urdu mt-6 space-y-5 text-[1.05rem] text-slate-700">
+            <p>جناح پارک، Mushtaq Baig Shaheed Road پر Chaklala Cantt. کے قریب واقع ہے۔ یہ مقام راولپنڈی کے شہری نقشے میں ایک واضح تفریحی مرکز کے طور پر پہچانا جاتا ہے اور اسی نام کے دوسرے پاکستانی پارکوں سے اسے <strong>Rawalpindi</strong>، <strong>Chaklala Cantt.</strong> اور اس کے جغرافیائی نقاط کے ذریعے الگ شناخت دی جاتی ہے۔</p>
+            <p>عوامی حوالہ جاتی ریکارڈ اسے محمد علی جناح کے نام سے منسوب پارک کے طور پر درج کرتے ہیں۔ موجودہ کمپلیکس میں سبز حصوں کے ساتھ تفریح، کھانے اور سینما جیسی سرگرمیاں بھی ملتی ہیں، اس لیے یہاں صبح کی واک سے لے کر شام کے خاندانی دورے تک مختلف انداز کا تجربہ ممکن ہے۔</p>
+          </div>
+          <div class="mt-8 grid gap-4 sm:grid-cols-3">
+            <div class="rounded-2xl bg-green-50 p-5"><strong class="block text-green-900">مقام</strong><span class="text-sm text-slate-600">Chaklala Cantt., Rawalpindi</span></div>
+            <div class="rounded-2xl bg-green-50 p-5"><strong class="block text-green-900">تجویز کردہ وقت</strong><span class="text-sm text-slate-600">1–3 گھنٹے</span></div>
+            <div class="rounded-2xl bg-green-50 p-5"><strong class="block text-green-900">عام اوقات</strong><span class="text-sm text-slate-600">06:00–23:59*</span></div>
+          </div>
+          <p class="mt-4 text-xs text-slate-500">*عوامی لسٹنگز کے مطابق؛ خصوصی سہولیات کے اوقات مختلف ہو سکتے ہیں۔</p>
+        </article>
+        <figure class="card overflow-hidden">
+          <img src="/images/jinnah-park-fountain.jpg" alt="جناح پارک میں فوارے اور تفریحی ماحول" class="h-full min-h-[380px] w-full object-cover" loading="lazy" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="border-y border-green-900/10 bg-[#eef3e9] py-14">
+      <div class="shell grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="card p-6"><div class="info-icon">◷</div><h3 class="mt-4 font-black text-green-950">بہترین وقت</h3><p class="mt-2 leading-7 text-slate-600">صبح سویرے واک کے لیے یا شام میں جب گرمی کم ہو۔ جمعہ اور ہفتہ کی شام زیادہ مصروف ہو سکتی ہے۔</p></div>
+        <div class="card p-6"><div class="info-icon">⌛</div><h3 class="mt-4 font-black text-green-950">قیام کی مدت</h3><p class="mt-2 leading-7 text-slate-600">عام سیر کے لیے 1–2 گھنٹے؛ سینما، کھانا یا سرگرمیاں شامل ہوں تو 3+ گھنٹے بہتر ہیں۔</p></div>
+        <div class="card p-6"><div class="info-icon">◈</div><h3 class="mt-4 font-black text-green-950">ٹکٹ / اخراجات</h3><p class="mt-2 leading-7 text-slate-600">پارک اور اندرونی آپریٹرز کی فیس الگ ہو سکتی ہے۔ سینما، رائیڈز، بولنگ اور پارکنگ کے تازہ نرخ موقع پر تصدیق کریں۔</p></div>
+        <div class="card p-6"><div class="info-icon">P</div><h3 class="mt-4 font-black text-green-950">پارکنگ</h3><p class="mt-2 leading-7 text-slate-600">کمپلیکس کے اطراف گاڑیوں کی پارکنگ دستیاب رہتی ہے؛ مصروف شاموں اور ویک اینڈ پر اضافی وقت رکھیں۔</p></div>
+      </div>
+    </section>
+
+    <section id="سفر" class="shell py-16 md:py-24">
+      <div class="grid gap-8 lg:grid-cols-2">
+        <div>
+          <p class="eyebrow">پہنچنے کا عملی طریقہ</p><h2 class="section-title mt-2">تفصیلی ٹرانسپورٹ</h2>
+          <div class="mt-7 space-y-4">
+            <div class="card flex gap-4 p-6"><div class="info-icon">🚗</div><div><h3 class="font-black text-green-950">اپنی گاڑی / رائیڈ ہیلنگ</h3><p class="mt-2 leading-8 text-slate-600">منزل میں “Jinnah Park, Mushtaq Baig Shaheed Road, Chaklala Cantt.” درج کریں۔ صدر، مری روڈ اور چکلالہ سے رائیڈ ہیلنگ عام طور پر سیدھا آپشن ہے۔</p></div></div>
+            <div class="card flex gap-4 p-6"><div class="info-icon">🚌</div><div><h3 class="font-black text-green-950">پبلک ٹرانسپورٹ</h3><p class="mt-2 leading-8 text-slate-600">قریب ترین مناسب بس یا ویگن پوائنٹ تک پہنچ کر آخری حصے کے لیے مقامی رکشہ یا رائیڈ ہیلنگ استعمال کرنا آسان رہتا ہے۔</p></div></div>
+            <div class="card flex gap-4 p-6"><div class="info-icon">📍</div><div><h3 class="font-black text-green-950">پتہ</h3><p class="mt-2 leading-8 text-slate-600" dir="ltr">Mushtaq Baig Shaheed Road, Chaklala Cantt., Rawalpindi, 46000, Pakistan</p></div></div>
+          </div>
+        </div>
+        <div class="card overflow-hidden p-3">
+          <iframe title="جناح پارک راولپنڈی گوگل نقشہ" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5912.179057484699!2d73.06731487734208!3d33.57992867333843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38df935b4e538281%3A0xa6524410987d4e7!2sJinnah%20Park!5e1!3m2!1sur!2s!4v1788188597166!5m2!1sur!2s" width="100%" height="520" style="border:0;border-radius:18px" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section id="کھانا" class="bg-green-950 py-16 text-white md:py-20">
+      <div class="shell">
+        <p class="font-bold text-green-200">پارک کے دورے کے ساتھ</p><h2 class="mt-2 text-3xl font-black md:text-4xl">آس پاس کھانے کے اختیارات</h2>
+        <p class="mt-4 max-w-3xl leading-8 text-white/75">عوامی ڈائریکٹریوں اور مسافر لسٹنگز میں Jinnah Park کمپلیکس یا اس کے بہت قریب Diva، Pappasallis، McDonald’s اور دیگر فاسٹ فوڈ / کیفے اختیارات ملتے ہیں۔ برانچ اور اوقات روانگی سے پہلے دوبارہ چیک کریں۔</p>
+        <div class="mt-8 grid gap-4 md:grid-cols-3">
+          <article class="rounded-3xl border border-white/12 bg-white/8 p-6"><h3 class="text-xl font-black">Diva / Deva</h3><p class="mt-2 leading-7 text-white/70">پارک کمپلیکس کے اندر یا بالکل قریب بتایا جانے والا ڈائن اِن آپشن، پاکستانی اور بین الاقوامی ذائقوں کے لیے معروف۔</p></article>
+          <article class="rounded-3xl border border-white/12 bg-white/8 p-6"><h3 class="text-xl font-black">Pappasallis</h3><p class="mt-2 leading-7 text-white/70">Jinnah Park / Airport Road کے قریب اطالوی طرز کے پیزا، پاستا اور فیملی ڈائننگ کے لیے مشہور نام۔</p></article>
+          <article class="rounded-3xl border border-white/12 bg-white/8 p-6"><h3 class="text-xl font-black">فاسٹ فوڈ اور کیفے</h3><p class="mt-2 leading-7 text-white/70">کمپلیکس اور اطراف میں متعدد فاسٹ فوڈ، کافی اور اسنیک آپشنز ملتے ہیں؛ تازہ برانچ اسٹیٹس نقشے پر دیکھیں۔</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="مقامات" class="shell py-16 md:py-24">
+      <p class="eyebrow">ایک ہی دن میں مزید کیا دیکھیں</p><h2 class="section-title mt-2">قریبی مقامات</h2>
+      <div class="mt-8 grid gap-5 md:grid-cols-3">
+        <article class="card p-7"><h3 class="text-xl font-black text-green-950">Ayub National Park</h3><p class="mt-3 leading-8 text-slate-600">راولپنڈی کا بڑا سبز تفریحی علاقہ؛ خاندان، کھلے میدان اور لمبی سیر کے لیے معروف۔</p></article>
+        <article class="card p-7"><h3 class="text-xl font-black text-green-950">Pakistan Army Museum</h3><p class="mt-3 leading-8 text-slate-600">راولپنڈی کینٹ کے علاقے میں فوجی تاریخ سے متعلق مجموعوں اور نمائشوں کا اہم مقام۔</p></article>
+        <article class="card p-7"><h3 class="text-xl font-black text-green-950">Liaquat Bagh</h3><p class="mt-3 leading-8 text-slate-600">راولپنڈی کے تاریخی شہری مقامات میں شامل؛ شہر کے مرکزی حصے کی سیر کے ساتھ جوڑا جا سکتا ہے۔</p></article>
+      </div>
+    </section>
+
+    <section id="سوالات" class="border-y border-green-900/10 bg-white/55 py-16 md:py-20">
+      <div class="shell max-w-4xl">
+        <p class="eyebrow">FAQ</p><h2 class="section-title mt-2">عام سوالات</h2>
+        <div class="mt-8 space-y-3">
+          {faq.map(([q,a]) => <details class="card group p-5"><summary class="cursor-pointer list-none font-black text-green-950">{q}</summary><p class="mt-4 leading-8 text-slate-600">{a}</p></details>)}
+        </div>
+      </div>
+    </section>
+
+    <section class="shell py-16">
+      <div class="card p-7 md:p-10">
+        <p class="eyebrow">Entity Association</p><h2 class="section-title mt-2">سرکاری اور حوالہ جاتی ذرائع</h2>
+        <p class="mt-4 max-w-4xl leading-8 text-slate-600">اس گائیڈ میں مقام کی شناخت کو Rawalpindi، Chaklala Cantt.، پتہ، نقشہ، Wikidata اور Wikimedia Commons کے ساتھ واضح طور پر جوڑا گیا ہے۔ حکومتی و سیاحتی پس منظر کے لیے درج ذیل اداروں کے عوامی صفحات بھی حوالہ کے طور پر شامل ہیں۔</p>
+        <div class="mt-6 flex flex-wrap gap-3 text-sm">
+          <a class="btn btn-soft" href="https://rda.gop.pk/" target="_blank" rel="noopener noreferrer">Rawalpindi Development Authority</a>
+          <a class="btn btn-soft" href="https://tourism.punjab.gov.pk/" target="_blank" rel="noopener noreferrer">Punjab Tourism</a>
+          <a class="btn btn-soft" href="https://tourism.gov.pk/" target="_blank" rel="noopener noreferrer">Pakistan Tourism Development Corporation</a>
+          <a class="btn btn-soft" href="https://www.wikidata.org/wiki/Q6202662" target="_blank" rel="noopener noreferrer">Wikidata Q6202662</a>
+          <a class="btn btn-soft" href="https://commons.wikimedia.org/wiki/Category:Jinnah_Park,_Rawalpindi" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-[#142f1d] py-12 text-white/80">
+    <div class="shell grid gap-9 lg:grid-cols-[1.2fr_.8fr]">
+      <div><img src="/logo.svg" alt="جناح پارک راولپنڈی" class="h-14 w-auto brightness-0 invert" /><div class="mt-5 space-y-2 text-sm leading-7"><p>یہ ویب سائٹ ایک آزاد، غیر منافع بخش وزیٹر انفارمیشن گائیڈ پروجیکٹ ہے اور کسی سرکاری ادارے یا آفیشل تنظیم سے منسلک نہیں۔</p><p>یہاں دی گئی معلومات Rawalpindi Development Authority، Government of Punjab کے Tourism, Archaeology and Museums سے متعلق عوامی مواد اور Pakistan Tourism Development Corporation کے دستیاب عوامی حوالوں سے تقابل کے ساتھ مرتب کی گئی ہیں؛ یہ کسی تجارتی سفارش پر مبنی نہیں۔</p><p>تصویری حقوق: ویب سائٹ پر دکھائی گئی تصاویر کے حقوق اور کاپی رائٹ ان کے اصل تخلیق کاروں کے پاس رہتے ہیں۔</p><p>© 2026 جناح پارک راولپنڈی وزیٹر گائیڈ۔ جملہ حقوق محفوظ ہیں۔</p></div></div>
+      <div class="grid grid-cols-2 gap-4 text-sm"><a href="/privacy/">رازداری کی پالیسی</a><a href="/terms/">سروس کی شرائط</a><a href="/cookies/">Cookie ترتیبات</a><a href="https://maps.app.goo.gl/dXD85cQCFkmbErrWA" target="_blank" rel="noopener noreferrer">Google Maps</a></div>
+    </div>
+  </footer>
+</BaseLayout>

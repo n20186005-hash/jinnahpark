@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const title='Cookie ترتیبات — جناح پارک راولپنڈی وزیٹر گائیڈ';
+const description='ضروری، analytics، preference اور marketing Cookie کے لیے اپنی ترجیحات منظم کریں۔';
+---
+<BaseLayout title={title} description={description} path="/cookies/">
+<main class="shell py-14 md:py-20"><a href="/" class="btn btn-soft">← مرکزی صفحہ</a><article class="card mt-6 p-7 md:p-12"><p class="eyebrow">رضامندی کا انتظام</p><h1 class="section-title mt-2">Cookie ترتیبات</h1><p class="mt-3 text-slate-500">آخری اپ ڈیٹ: ستمبر 2026</p><p class="prose-urdu mt-6 text-slate-700">ہم Cookie اور مقامی اسٹوریج کو بنیادی فعالیت اور، آپ کی رضامندی کی صورت میں، analytics کے لیے استعمال کرتے ہیں۔ آپ اپنی ترجیحات یہاں تبدیل کر سکتے ہیں۔</p>
+<form id="cookie-form" class="mt-8 space-y-4">
+<label class="card flex items-center justify-between gap-4 p-5"><span><strong class="block text-green-950">ضروری Cookie</strong><small class="text-slate-500">سائٹ کی بنیادی فعالیت اور رضامندی کی یادداشت کے لیے ضروری۔</small></span><input type="checkbox" checked disabled class="h-5 w-5" /></label>
+<label class="card flex items-center justify-between gap-4 p-5"><span><strong class="block text-green-950">Analytics Cookie</strong><small class="text-slate-500">Google Analytics 4 (G-HXM22WWPKP) صرف فعال رضامندی کے بعد لوڈ ہوتا ہے۔</small></span><input id="analytics" type="checkbox" class="h-5 w-5" /></label>
+<label class="card flex items-center justify-between gap-4 p-5"><span><strong class="block text-green-950">Preference Cookie</strong><small class="text-slate-500">آپ کی منتخب کردہ مقامی ترجیحات محفوظ رکھنے کے لیے۔</small></span><input id="preferences" type="checkbox" class="h-5 w-5" /></label>
+<label class="card flex items-center justify-between gap-4 p-5"><span><strong class="block text-green-950">Marketing Cookie</strong><small class="text-slate-500">یہ سائٹ فی الحال ذاتی نوعیت کے اشتہارات لوڈ نہیں کرتی؛ اختیار بطور واضح رضامندی کنٹرول موجود ہے۔</small></span><input id="marketing" type="checkbox" class="h-5 w-5" /></label>
+<div class="flex flex-wrap gap-3 pt-3"><button class="btn btn-primary" type="submit">ترجیحات محفوظ کریں</button><button class="btn btn-soft" id="reject" type="button">غیر ضروری سب رد کریں</button></div><p id="status" class="text-sm text-green-800" aria-live="polite"></p>
+</form></article></main>
+<script is:inline>
+  const key='jp-cookie-consent';
+  const $=id=>document.getElementById(id);
+  try { const c=JSON.parse(localStorage.getItem(key)||'{}'); $('analytics').checked=!!c.analytics; $('preferences').checked=!!c.preferences; $('marketing').checked=!!c.marketing; } catch {}
+  $('cookie-form').addEventListener('submit',e=>{e.preventDefault(); localStorage.setItem(key,JSON.stringify({necessary:true,analytics:$('analytics').checked,preferences:$('preferences').checked,marketing:$('marketing').checked})); $('status').textContent='ترجیحات محفوظ ہو گئیں۔ Analytics کی تبدیلی اگلی صفحہ لوڈ پر لاگو ہوگی۔';});
+  $('reject').addEventListener('click',()=>{ $('analytics').checked=false; $('preferences').checked=false; $('marketing').checked=false; localStorage.setItem(key,JSON.stringify({necessary:true,analytics:false,preferences:false,marketing:false})); $('status').textContent='غیر ضروری Cookie رد کر دیے گئے۔';});
+</script>
+</BaseLayout>

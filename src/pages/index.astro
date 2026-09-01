@@ -1,19 +1,24 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Weather from '../components/Weather.astro';
 
-const pageTitle = 'جناح پارک راولپنڈی — وزیٹر گائیڈ، راستہ، اوقات اور آس پاس';
-const pageDescription = 'جناح پارک، چکلالہ کینٹ راولپنڈی کے لیے آزاد وزیٹر گائیڈ: مقام، نقشہ، اوقات، ٹرانسپورٹ، پارکنگ، کھانے، قریبی مقامات اور عام سوالات۔';
+const pageTitle = 'Jinnah Park Rawalpindi (جناح پارک) — وزیٹر گائیڈ، تاریخ اور سہولیات';
+const pageDescription = 'Jinnah Park (جناح پارک) راولپنڈی، پنجاب، پاکستان — آزاد وزیٹر گائیڈ: تاریخ، مقام، نقشہ، اوقات، پارکنگ، سہولیات، موسم، کھانے اور قریبی مقامات۔';
 const canonical = Astro.site ? new URL('/', Astro.site).toString() : undefined;
 const image = Astro.site ? new URL('/images/jinnah-park-hero.jpg', Astro.site).toString() : '/images/jinnah-park-hero.jpg';
+const siteOrigin = Astro.site ? Astro.site.origin : 'https://jinnahpark.com';
 
 const attractionSchema = {
   '@context': 'https://schema.org',
   '@type': ['TouristAttraction', 'Park'],
+  '@id': `${siteOrigin}/#attraction`,
   name: 'Jinnah Park',
-  alternateName: ['جناح پارک', 'Jinnah Park Rawalpindi'],
+  alternateName: ['جناح پارک', 'Jinnah Park Rawalpindi', 'Jinnah Park Chaklala'],
   description: pageDescription,
   ...(canonical ? { url: canonical } : {}),
-  image,
+  image: [image],
+  isAccessibleForFree: true,
+  hasMap: 'https://maps.app.goo.gl/dXD85cQCFkmbErrWA',
   telephone: '+92 311 5885849',
   address: {
     '@type': 'PostalAddress',
@@ -25,8 +30,8 @@ const attractionSchema = {
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 33.5844,
-    longitude: 73.0735
+    latitude: 33.57992867333843,
+    longitude: 73.06731487734208
   },
   aggregateRating: {
     '@type': 'AggregateRating',
@@ -43,7 +48,8 @@ const attractionSchema = {
   sameAs: [
     'https://maps.app.goo.gl/dXD85cQCFkmbErrWA',
     'https://www.wikidata.org/wiki/Q6202662',
-    'https://commons.wikimedia.org/wiki/Category:Jinnah_Park,_Rawalpindi'
+    'https://commons.wikimedia.org/wiki/Category:Jinnah_Park,_Rawalpindi',
+    'https://en.wikipedia.org/wiki/Jinnah_Park_(Rawalpindi)'
   ]
 };
 
@@ -52,23 +58,80 @@ const faq = [
   ['پارک کے عام اوقات کیا ہیں؟','متعدد تازہ عوامی لسٹنگز پارک کے عمومی اوقات صبح 6 بجے سے رات 12 بجے تک بتاتی ہیں۔ خصوصی سہولیات، سینما اور ریستوران کے اوقات مختلف ہو سکتے ہیں، اس لیے روانگی سے پہلے تازہ معلومات چیک کریں۔'],
   ['داخلہ اور دوسری سرگرمیوں کی فیس کتنی ہے؟','پارک، پارکنگ، سینما، بولنگ، رائیڈز اور دوسری سرگرمیوں کی فیس ایک جیسی نہیں ہوتی اور وقت کے ساتھ بدل سکتی ہے۔ اہم اخراجات کے لیے مقام یا متعلقہ آپریٹر سے تازہ تصدیق بہتر ہے۔'],
   ['کتنا وقت رکھنا مناسب ہے؟','صرف باغیچے اور واک کے لیے تقریباً 1 سے 2 گھنٹے مناسب ہیں؛ کھانے، سینما یا تفریحی سرگرمی شامل ہو تو 3 گھنٹے یا اس سے زیادہ رکھیں۔'],
-  ['کیا خاندان اور بچوں کے لیے مناسب ہے؟','جناح پارک اپنے سبز میدانوں، واکنگ ایریاز اور تفریحی سہولیات کی وجہ سے خاندانوں کے لیے مقبول مقام ہے۔ بچوں کے ساتھ جاتے وقت مصروف اوقات میں اضافی نگرانی مفید رہتی ہے۔']
+  ['کیا خاندان اور بچوں کے لیے مناسب ہے؟','جناح پارک اپنے سبز میدانوں، واکنگ ایریاز اور تفریحی سہولیات کی وجہ سے خاندانوں کے لیے مقبول مقام ہے۔ بچوں کے ساتھ جاتے وقت مصروف اوقات میں اضافی نگرانی مفید رہتی ہے۔'],
+  ['کیا پارک میں بیت الخلا (WC) کی سہولت ہے؟','جی ہاں، پارک کے اندر متعدد مقامات پر عوامی بیت الخلا موجود ہیں۔ خاندانوں اور بچوں کے ساتھ جانے والوں کے لیے ان کی صفائی پر خصوصی توجہ دی جاتی ہے۔'],
+  ['کیا پارک کے قریب ہوٹل یا رہائش دستیاب ہے؟','پارک کے ارد گرد مختلف معیار کے ہوٹل اور گیسٹ ہاؤس موجود ہیں۔ ہم کسی مخصوص ادارے کی سفارش نہیں کرتے؛ نقشے پر تازہ جائزے اور قیمتیں دیکھ کر اپنی ضرورت کے مطابق انتخاب کریں۔'],
+  ['کیا پارک کے قریب پیٹرول پمپ ہیں؟','جی ہاں، پارک کے آس پاس کی مرکزی سڑکوں پر پیٹرول پمپ دستیاب ہیں۔ اگر آپ الیکٹرک گاڑی استعمال کر رہے ہیں تو چارجنگ پوائنٹس کی دستیابی سفر سے پہلے نقشے پر چیک کر لیں۔']
 ];
 const faqSchema = {
   '@context':'https://schema.org',
   '@type':'FAQPage',
   mainEntity: faq.map(([q,a]) => ({ '@type':'Question', name:q, acceptedAnswer:{ '@type':'Answer', text:a } }))
 };
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteOrigin}/#website`,
+  url: `${siteOrigin}/`,
+  name: 'Jinnah Park Rawalpindi Visitor Guide',
+  alternateName: 'جناح پارک راولپنڈی وزیٹر گائیڈ',
+  description: pageDescription,
+  inLanguage: 'ur-PK',
+  publisher: {
+    '@type': 'Organization',
+    '@id': `${siteOrigin}/#organization`,
+    name: 'Jinnah Park Rawalpindi Visitor Guide (غیر منافع بخش)',
+    url: `${siteOrigin}/`
+  }
+};
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Pakistan', item: `${siteOrigin}/` },
+    { '@type': 'ListItem', position: 2, name: 'Punjab', item: `${siteOrigin}/` },
+    { '@type': 'ListItem', position: 3, name: 'Rawalpindi', item: `${siteOrigin}/` },
+    { '@type': 'ListItem', position: 4, name: 'Jinnah Park', item: `${siteOrigin}/` }
+  ]
+};
+
+const timeline = [
+  ['1882','مرکزی جیل کا قیام','آج کے پارک کی جگہ پر راولپنڈی کی مرکزی جیل قائم ہوئی، جو اپنے وقت میں ملک کی اہم جیلوں میں شمار ہوتی تھی۔'],
+  ['1979','جیل کی تاریخ کا ایک باب','اس جیل میں پاکستان کے سابق وزیرِ اعظم ذوالفقار علی بھٹو کو 1979ء میں پھانسی دی گئی۔ یہ واقعہ ملکی تاریخ کا ایک تلخ باب ہے۔'],
+  ['1986–1988','جیل کی منتقلی اور انہدام','ایڈیالہ جیل کی تعمیر کے بعد قیدیوں کو منتقل کیا گیا اور 1988ء میں پرانی جیل کو منہدم کر دیا گیا۔'],
+  ['1995','پارک کے منصوبے کا آغاز','راولپنڈی ڈیولپمنٹ اتھارٹی (RDA) نے اس تاریخی مقام کو عوامی پارک بنانے کا منصوبہ شروع کیا اور تعمیر کا کام اسلام آباد کی کیپٹل ڈیولپمنٹ اتھارٹی (CDA) کو سونپا۔'],
+  ['2004','منصوبے کی منتقلی','کئی سال تک نامکمل رہنے والا یہ منصوبہ پاک فوج کے دسویں کور کے حوالے کیا گیا تاکہ تعمیر مکمل ہو سکے۔'],
+  ['2006','جناح پارک کا افتتاح','پارک عوام کے لیے کھول دیا گیا۔ اس منصوبے پر تقریباً 329 ملین روپے لاگت آئی۔']
+];
+
+const stories = [
+  ['ماضی سے روشن مستقبل تک','جہاں کبھی ایک اعلیٰ حفاظتی جیل قیدیوں کو رکھنے کا مقام تھی، آج وہیں لاکھوں خاندان تفریح کے لیے آتے ہیں۔ یہ تبدیلی راولپنڈی شہر کے لیے سب سے علامتی ارتقا تصور کی جاتی ہے۔','تاریخی'],
+  ['قائدِ اعظم کا نام','پارک کا نام پاکستان کے بانی محمد علی جناح کے نام پر رکھا گیا۔ مرکزی دروازے پر قائدِ اعظم کا مجسمہ اور ان کے خاندانی نام سے متاثر ایک فن پارہ موجود ہے۔','تاریخی'],
+  ['اتحاد کے نشان','پارک کے اندر چار بلند ستون کھڑے ہیں جنہیں یونٹی ٹاورز کہا جاتا ہے۔ یہ چاروں ستون پاکستان کے چاروں صوبوں کی نمائندگی کرتے ہیں اور ان کی اونچائی صوبے کے رقبے کے تناسب سے بنائی گئی ہے۔','ثقافتی'],
+  ['روایتی سائبان','چاروں صوبوں کی روایتی پگڑیوں کی شکل میں چار چبوترے بنائے گئے ہیں جن میں چارپائیوں اور کشن کے ذریعے مقامی بیٹھک کا انداز اپنایا گیا ہے۔ یہ جگہ پارک کا ثقافتی گوشہ تصور ہوتی ہے۔','ثقافتی']
+];
+
+const facilities = [
+  ['WC','عوامی بیت الخلا','پارک کے اندر متعدد مقامات پر عوامی بیت الخلا دستیاب ہیں؛ خاندانوں کے لیے صفائی اور دیکھ بھال پر خصوصی توجہ دی جاتی ہے۔'],
+  ['P','پارکنگ','پارک کے اطراف بڑی پارکنگ موجود ہے جس میں ہزار سے زائد گاڑیوں کی گنجائش بتائی جاتی ہے؛ مصروف شاموں اور ویک اینڈ پر جلد جگہ منتخب کرنا بہتر ہے۔'],
+  ['🍽','کھانے پینے کی اقسام','پارک کے اندر اور اطراف فاسٹ فوڈ، فیملی ریستوران، کافی شاپس اور آئس کریم کی دکانیں موجود ہیں۔'],
+  ['🏨','رہائش','پارک کے قریب مختلف معیار کے ہوٹل اور گیسٹ ہاؤس دستیاب ہیں؛ انتخاب سے پہلے نقشے پر تازہ جائزے دیکھنا مفید ہے۔'],
+  ['🛒','گروسری اور جنرل اسٹور','قریبی علاقوں میں گروسری اور جنرل اسٹور دستیاب ہیں؛ پارک کے اندر بھی چھوٹی دکانیں ملتی ہیں۔'],
+  ['⛽','ایندھن اور چارجنگ','مرکزی سڑکوں پر پیٹرول پمپ موجود ہیں؛ الیکٹرک گاڑی کے لیے چارجنگ پوائنٹ کی دستیابی سفر سے پہلے نقشے پر تصدیق کر لیں۔']
+];
 ---
+
 <BaseLayout title={pageTitle} description={pageDescription} path="/">
-  <script type="application/ld+json" set:html={JSON.stringify(attractionSchema)}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(attractionSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
 
   <header class="sticky top-0 z-50 border-b border-green-950/10 bg-[#fffdf8]/95 backdrop-blur">
     <div class="shell flex min-h-20 items-center justify-between gap-5">
       <a href="/" class="flex items-center" aria-label="جناح پارک راولپنڈی ہوم"><img src="/logo.svg" alt="جناح پارک راولپنڈی" class="h-14 w-auto" /></a>
-      <nav class="hidden lg:flex items-center gap-6 text-sm font-bold text-green-950">
-        <a href="#تعارف">تعارف</a><a href="#سفر">سفر</a><a href="#کھانا">آس پاس کھانا</a><a href="#مقامات">قریبی مقامات</a><a href="#سوالات">عام سوالات</a>
+      <nav class="hidden lg:flex items-center gap-4 text-sm font-bold text-green-950">
+        <a href="#تعارف">تعارف</a><a href="#تاریخ">تاریخ</a><a href="#کہانیاں">کہانیاں</a><a href="#سہولیات">سہولیات</a><a href="#سفر">سفر</a><a href="#کھانا">کھانا</a><a href="#مقامات">مقامات</a><a href="#سوالات">سوالات</a>
       </nav>
       <a class="btn btn-primary text-sm" href="https://maps.app.goo.gl/dXD85cQCFkmbErrWA" target="_blank" rel="noopener noreferrer">نقشے میں کھولیں</a>
     </div>
@@ -76,7 +139,7 @@ const faqSchema = {
 
   <main>
     <section class="relative min-h-[650px] overflow-hidden bg-green-950 text-white">
-      <img src="/images/jinnah-park-hero.jpg" alt="جناح پارک راولپنڈی کا سبز منظر" class="absolute inset-0 h-full w-full object-cover" fetchpriority="high" />
+      <img src="/images/jinnah-park-hero.jpg" alt="Jinnah Park Rawalpindi - Main view in Rawalpindi, Punjab, Pakistan" class="absolute inset-0 h-full w-full object-cover" />
       <div class="hero-overlay absolute inset-0"></div>
       <div class="shell relative z-10 flex min-h-[650px] items-end pb-16 pt-24 md:items-center md:pb-10">
         <div class="max-w-2xl rounded-[30px] border border-white/15 bg-green-950/35 p-7 shadow-2xl backdrop-blur-sm md:p-10">
@@ -93,14 +156,27 @@ const faqSchema = {
       </div>
     </section>
 
+    <nav class="border-b border-green-900/10 bg-[#fffdf8] py-3" aria-label="Breadcrumb">
+      <ol class="shell flex flex-wrap items-center gap-2 text-sm text-slate-600">
+        <li><a href="/" class="font-bold text-green-900 hover:underline">پاکستان</a></li>
+        <li aria-hidden="true">›</li>
+        <li><a href="/" class="font-bold text-green-900 hover:underline">پنجاب</a></li>
+        <li aria-hidden="true">›</li>
+        <li><a href="/" class="font-bold text-green-900 hover:underline">راولپنڈی</a></li>
+        <li aria-hidden="true">›</li>
+        <li class="font-black text-green-950" aria-current="page">جناح پارک</li>
+      </ol>
+    </nav>
+
     <section id="تعارف" class="shell py-16 md:py-24">
       <div class="grid gap-8 lg:grid-cols-[1.15fr_.85fr]">
         <article class="card p-7 md:p-10">
           <p class="eyebrow">شہر کے بیچ ایک سبز وقفہ</p>
           <h2 class="section-title mt-2">جناح پارک راولپنڈی کا تعارف</h2>
           <div class="prose-urdu mt-6 space-y-5 text-[1.05rem] text-slate-700">
-            <p>جناح پارک، Mushtaq Baig Shaheed Road پر Chaklala Cantt. کے قریب واقع ہے۔ یہ مقام راولپنڈی کے شہری نقشے میں ایک واضح تفریحی مرکز کے طور پر پہچانا جاتا ہے اور اسی نام کے دوسرے پاکستانی پارکوں سے اسے <strong>Rawalpindi</strong>، <strong>Chaklala Cantt.</strong> اور اس کے جغرافیائی نقاط کے ذریعے الگ شناخت دی جاتی ہے۔</p>
+            <p><strong>Jinnah Park</strong>، جسے اردو میں <strong>جناح پارک</strong> کہا جاتا ہے، راولپنڈی شہر، صوبہ پنجاب، پاکستان کے Chaklala Cantt. علاقے میں Mushtaq Baig Shaheed Road پر واقع ایک اہم عوامی تفریحی پارک ہے۔ یہ مقام راولپنڈی کے شہری نقشے میں ایک واضح تفریحی مرکز کے طور پر پہچانا جاتا ہے اور اسی نام کے دوسرے پاکستانی پارکوں سے اسے <strong>Rawalpindi</strong>، <strong>Chaklala Cantt.</strong> اور اس کے جغرافیائی نقاط کے ذریعے الگ شناخت دی جاتی ہے۔</p>
             <p>عوامی حوالہ جاتی ریکارڈ اسے محمد علی جناح کے نام سے منسوب پارک کے طور پر درج کرتے ہیں۔ موجودہ کمپلیکس میں سبز حصوں کے ساتھ تفریح، کھانے اور سینما جیسی سرگرمیاں بھی ملتی ہیں، اس لیے یہاں صبح کی واک سے لے کر شام کے خاندانی دورے تک مختلف انداز کا تجربہ ممکن ہے۔</p>
+            <p>یہ پارک تقریباً <strong>17 ہیکٹر (42 ایکڑ)</strong> پر پھیلا ہوا ہے اور اسے راولپنڈی ڈیولپمنٹ اتھارٹی (RDA) کے زیرِ انتظام ایک بڑے عوامی تفریحی مرکز کے طور پر دیکھا جاتا ہے۔</p>
           </div>
           <div class="mt-8 grid gap-4 sm:grid-cols-3">
             <div class="rounded-2xl bg-green-50 p-5"><strong class="block text-green-900">مقام</strong><span class="text-sm text-slate-600">Chaklala Cantt., Rawalpindi</span></div>
@@ -110,7 +186,7 @@ const faqSchema = {
           <p class="mt-4 text-xs text-slate-500">*عوامی لسٹنگز کے مطابق؛ خصوصی سہولیات کے اوقات مختلف ہو سکتے ہیں۔</p>
         </article>
         <figure class="card overflow-hidden">
-          <img src="/images/jinnah-park-fountain.jpg" alt="جناح پارک میں فوارے اور تفریحی ماحول" class="h-full min-h-[380px] w-full object-cover" loading="lazy" />
+          <img src="/images/jinnah-park-fountain.jpg" alt="Jinnah Park Rawalpindi - Fountain and recreation area, Punjab, Pakistan" class="h-full min-h-[380px] w-full object-cover" loading="lazy" />
         </figure>
       </div>
     </section>
@@ -123,6 +199,56 @@ const faqSchema = {
         <div class="card p-6"><div class="info-icon">P</div><h3 class="mt-4 font-black text-green-950">پارکنگ</h3><p class="mt-2 leading-7 text-slate-600">کمپلیکس کے اطراف گاڑیوں کی پارکنگ دستیاب رہتی ہے؛ مصروف شاموں اور ویک اینڈ پر اضافی وقت رکھیں۔</p></div>
       </div>
     </section>
+
+    <section id="تاریخ" class="shell py-16 md:py-24">
+      <div class="grid gap-10 lg:grid-cols-[1fr_1.1fr]">
+        <div>
+          <p class="eyebrow">تاریخ اور ورثہ</p>
+          <h2 class="section-title mt-2">ایک صدی پر محیط کہانی</h2>
+          <div class="prose-urdu mt-6 space-y-5 text-[1.05rem] text-slate-700">
+            <p>جناح پارک کی زمین کی کہانی بیسویں صدی کے آخر سے بھی پرانی ہے۔ آج جہاں سبز میدان اور تفریحی سہولیات ہیں، وہاں کبھی <strong>راولپنڈی کی مرکزی جیل</strong> کھڑی تھی۔ 1882ء میں قائم ہونے والی یہ جیل اپنے وقت میں اعلیٰ حفاظتی جیلوں میں شمار ہوتی تھی۔</p>
+            <p>1995ء میں راولپنڈی ڈیولپمنٹ اتھارٹی (RDA) نے اس تاریخی مقام کو عوامی پارک میں تبدیل کرنے کا منصوبہ شروع کیا اور تعمیر کا کام اسلام آباد کی کیپٹل ڈیولپمنٹ اتھارٹی (CDA) کو سونپا۔ منصوبہ کئی سال تک نامکمل رہا؛ 2004ء میں اسے پاک فوج کے دسویں کور کے حوالے کیا گیا اور آخر کار <strong>2006ء</strong> میں پارک عوام کے لیے کھول دیا گیا۔</p>
+            <p class="text-sm leading-8 text-slate-500">یہ معلومات ویکیپیڈیا، DAWN اور The News International جیسے اشاعتی ذرائع کے عوامی ریکارڈ پر مبنی ہیں۔</p>
+          </div>
+        </div>
+        <div class="space-y-4">
+          {timeline.map(([year,title,desc]) => (
+            <div class="card flex gap-5 p-5">
+              <div class="w-24 shrink-0 rounded-2xl bg-green-950 py-3 text-center text-sm font-black text-white" dir="ltr">{year}</div>
+              <div><h3 class="font-black text-green-950">{title}</h3><p class="mt-1 leading-7 text-slate-600">{desc}</p></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="کہانیاں" class="border-y border-green-900/10 bg-[#f3f0e4] py-16 md:py-24">
+      <div class="shell">
+        <p class="eyebrow">کہانیاں اور روایات</p><h2 class="section-title mt-2">جناح پارک کی کہانیاں</h2>
+        <div class="mt-8 grid gap-5 md:grid-cols-2">
+          {stories.map(([title,desc,kind]) => (
+            <article class="card p-7">
+              <span class="inline-block rounded-full bg-green-950/8 px-3 py-1 text-xs font-bold text-green-900">{kind}</span>
+              <h3 class="mt-3 text-xl font-black text-green-950">{title}</h3>
+              <p class="mt-3 leading-8 text-slate-600">{desc}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="سہولیات" class="shell py-16 md:py-24">
+      <p class="eyebrow">زائرین کے لیے سہولیات</p>
+      <h2 class="section-title mt-2">پارک کی سہولیات</h2>
+      <p class="mt-4 max-w-3xl leading-8 text-slate-600">یہ ایک غیر منافع بخش معلوماتی گائیڈ ہے؛ ہم کسی تجارتی ادارے یا برانڈ کی سفارش نہیں کرتے۔ ذیل میں صرف سہولت کی اقسام کا عمومی جائزہ دیا گیا ہے، تاکہ آپ اپنے دورے کا منصوبہ آسانی سے بنا سکیں۔</p>
+      <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {facilities.map(([icon,title,desc]) => (
+          <div class="card p-6"><div class="info-icon">{icon}</div><h3 class="mt-4 font-black text-green-950">{title}</h3><p class="mt-2 leading-7 text-slate-600">{desc}</p></div>
+        ))}
+      </div>
+    </section>
+
+    <Weather />
 
     <section id="سفر" class="shell py-16 md:py-24">
       <div class="grid gap-8 lg:grid-cols-2">
@@ -142,18 +268,19 @@ const faqSchema = {
 
     <section id="کھانا" class="bg-green-950 py-16 text-white md:py-20">
       <div class="shell">
-        <p class="font-bold text-green-200">پارک کے دورے کے ساتھ</p><h2 class="mt-2 text-3xl font-black md:text-4xl">آس پاس کھانے کے اختیارات</h2>
-        <p class="mt-4 max-w-3xl leading-8 text-white/75">عوامی ڈائریکٹریوں اور مسافر لسٹنگز میں Jinnah Park کمپلیکس یا اس کے بہت قریب Diva، Pappasallis، McDonald’s اور دیگر فاسٹ فوڈ / کیفے اختیارات ملتے ہیں۔ برانچ اور اوقات روانگی سے پہلے دوبارہ چیک کریں۔</p>
+        <p class="font-bold text-green-200">پارک کے دورے کے ساتھ</p><h2 class="mt-2 text-3xl font-black md:text-4xl">کھانے پینے کی اقسام</h2>
+        <p class="mt-4 max-w-3xl leading-8 text-white/75">پارک کے اندر اور اس کے فوری اطراف فاسٹ فوڈ، خاندانی ریستوران، کافی شاپس، آئس کریم اور روایتی اسنیکس کی دکانیں موجود ہیں۔ اس کے علاوہ کمپلیکس کا ایک حصہ شہر کے ابتدائی ملٹی پلیکس سینما میں سے ایک ہے، جہاں فلم اور کھانے کو ایک ہی دورے میں ملایا جا سکتا ہے۔ ہم کسی مخصوص برانڈ کی سفارش نہیں کرتے؛ برانچوں کے اوقات روانگی سے پہلے تازہ معلومات سے تصدیق کریں۔</p>
         <div class="mt-8 grid gap-4 md:grid-cols-3">
-          <article class="rounded-3xl border border-white/12 bg-white/8 p-6"><h3 class="text-xl font-black">Diva / Deva</h3><p class="mt-2 leading-7 text-white/70">پارک کمپلیکس کے اندر یا بالکل قریب بتایا جانے والا ڈائن اِن آپشن، پاکستانی اور بین الاقوامی ذائقوں کے لیے معروف۔</p></article>
-          <article class="rounded-3xl border border-white/12 bg-white/8 p-6"><h3 class="text-xl font-black">Pappasallis</h3><p class="mt-2 leading-7 text-white/70">Jinnah Park / Airport Road کے قریب اطالوی طرز کے پیزا، پاستا اور فیملی ڈائننگ کے لیے مشہور نام۔</p></article>
-          <article class="rounded-3xl border border-white/12 bg-white/8 p-6"><h3 class="text-xl font-black">فاسٹ فوڈ اور کیفے</h3><p class="mt-2 leading-7 text-white/70">کمپلیکس اور اطراف میں متعدد فاسٹ فوڈ، کافی اور اسنیک آپشنز ملتے ہیں؛ تازہ برانچ اسٹیٹس نقشے پر دیکھیں۔</p></article>
+          <article class="rounded-3xl border border-white/12 bg-white/8 p-6"><h3 class="text-xl font-black">فاسٹ فوڈ اور ڈرائیو تھرو</h3><p class="mt-2 leading-7 text-white/70">کمپلیکس کے اندر اور اطراف بین الاقوامی فاسٹ فوڈ ریستوران موجود ہیں؛ بعض میں ڈرائیو تھرو کی سہولت بھی ملتی ہے۔</p></article>
+          <article class="rounded-3xl border border-white/12 bg-white/8 p-6"><h3 class="text-xl font-black">خاندانی ریستوران</h3><p class="mt-2 leading-7 text-white/70">پاکستانی اور بین الاقوامی کھانوں کے لیے فیملی ڈائننگ کے اختیارات پارک کے قریب دستیاب ہیں۔</p></article>
+          <article class="rounded-3xl border border-white/12 bg-white/8 p-6"><h3 class="text-xl font-black">کافی، میٹھے اور اسنیکس</h3><p class="mt-2 leading-7 text-white/70">کافی شاپس، فروزن یوگرٹ، آئس کریم اور چھوٹے اسنیک اسٹالز پارک کے اندر اور اطراف میں ملتے ہیں۔</p></article>
         </div>
       </div>
     </section>
 
     <section id="مقامات" class="shell py-16 md:py-24">
       <p class="eyebrow">ایک ہی دن میں مزید کیا دیکھیں</p><h2 class="section-title mt-2">قریبی مقامات</h2>
+      <p class="mt-4 max-w-3xl leading-8 text-slate-600">جناح پارک کے دورے کے دوران زائرین آس پاس کے تاریخی اور ثقافتی مقامات، جیسے <strong>Ayub National Park</strong> اور <strong>Pakistan Army Museum</strong>، آسانی سے دیکھ سکتے ہیں۔ یہ مقامات راولپنڈی کے مرکزی علاقوں میں واقع ہیں اور ایک ہی دن کی سیر میں شامل کیے جا سکتے ہیں۔</p>
       <div class="mt-8 grid gap-5 md:grid-cols-3">
         <article class="card p-7"><h3 class="text-xl font-black text-green-950">Ayub National Park</h3><p class="mt-3 leading-8 text-slate-600">راولپنڈی کا بڑا سبز تفریحی علاقہ؛ خاندان، کھلے میدان اور لمبی سیر کے لیے معروف۔</p></article>
         <article class="card p-7"><h3 class="text-xl font-black text-green-950">Pakistan Army Museum</h3><p class="mt-3 leading-8 text-slate-600">راولپنڈی کینٹ کے علاقے میں فوجی تاریخ سے متعلق مجموعوں اور نمائشوں کا اہم مقام۔</p></article>
@@ -173,11 +300,12 @@ const faqSchema = {
     <section class="shell py-16">
       <div class="card p-7 md:p-10">
         <p class="eyebrow">Entity Association</p><h2 class="section-title mt-2">سرکاری اور حوالہ جاتی ذرائع</h2>
-        <p class="mt-4 max-w-4xl leading-8 text-slate-600">اس گائیڈ میں مقام کی شناخت کو Rawalpindi، Chaklala Cantt.، پتہ، نقشہ، Wikidata اور Wikimedia Commons کے ساتھ واضح طور پر جوڑا گیا ہے۔ حکومتی و سیاحتی پس منظر کے لیے درج ذیل اداروں کے عوامی صفحات بھی حوالہ کے طور پر شامل ہیں۔</p>
+        <p class="mt-4 max-w-4xl leading-8 text-slate-600">اس گائیڈ میں مقام کی شناخت کو Rawalpindi، Chaklala Cantt.، پتہ، نقشہ، Wikidata اور Wikimedia Commons کے ساتھ واضح طور پر جوڑا گیا ہے۔ تاریخی معلومات کے لیے ویکیپیڈیا کا انگریزی مضمون بھی حوالہ کے طور پر شامل ہے۔ حکومتی و سیاحتی پس منظر کے لیے درج ذیل اداروں کے عوامی صفحات بھی حوالہ کے طور پر موجود ہیں۔</p>
         <div class="mt-6 flex flex-wrap gap-3 text-sm">
           <a class="btn btn-soft" href="https://rda.gop.pk/" target="_blank" rel="noopener noreferrer">Rawalpindi Development Authority</a>
           <a class="btn btn-soft" href="https://tourism.punjab.gov.pk/" target="_blank" rel="noopener noreferrer">Punjab Tourism</a>
           <a class="btn btn-soft" href="https://tourism.gov.pk/" target="_blank" rel="noopener noreferrer">Pakistan Tourism Development Corporation</a>
+          <a class="btn btn-soft" href="https://en.wikipedia.org/wiki/Jinnah_Park_(Rawalpindi)" target="_blank" rel="noopener noreferrer">Wikipedia — Jinnah Park</a>
           <a class="btn btn-soft" href="https://www.wikidata.org/wiki/Q6202662" target="_blank" rel="noopener noreferrer">Wikidata Q6202662</a>
           <a class="btn btn-soft" href="https://commons.wikimedia.org/wiki/Category:Jinnah_Park,_Rawalpindi" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a>
         </div>

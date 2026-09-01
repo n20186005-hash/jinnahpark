@@ -12,13 +12,13 @@
 - Wrangler 4.127.1
 
 ## ڈومین کی واحد کنفیگریشن
-پروڈکشن URL صرف `SITE_URL` کے ذریعے Astro `site` فیلڈ میں جاتا ہے۔
+پروڈکشن ڈومین `jinnahpark.com` ہے اور بطور ڈیفالٹ Astro `site` فیلڈ میں سیٹ ہے۔ ضرورت پڑنے پر `SITE_URL` سے اسے اوور رائیڈ کیا جا سکتا ہے:
 
 ```bash
 SITE_URL=https://your-domain.tld pnpm build
 ```
 
-`SITE_URL` خالی ہو تو canonical / Open Graph absolute URL شامل نہیں کیے جاتے اور sitemap integration غیر فعال رہتی ہے۔
+canonical / Open Graph / JSON-LD سارے absolute URLs خودکار بنتے ہیں۔
 
 ## مقامی رن
 ```bash
@@ -29,11 +29,18 @@ pnpm build
 ```
 
 ## Cloudflare Workers
-`wrangler.jsonc` موجود ہے۔ Production deploy سے پہلے Cloudflare account authentication اور SITE_URL مقرر کریں، پھر:
+`wrangler.jsonc` موجود ہے (Astro 6+ مطابق `main` فیلڈ `@astrojs/cloudflare/entrypoints/server` پر سیٹ ہے)۔ Production deploy سے پہلے Cloudflare account authentication مقرر کریں، پھر:
 
 ```bash
 pnpm deploy
 ```
+
+## PWA
+- `public/manifest.webmanifest` — installable PWA (RTL، ur-PK، standalone)
+- `public/sw.js` — service worker (navigation network-first، static cache-first)
+- `public/icons/icon-192.png` / `icon-512.png` / `icon.svg` — آئیکن
+- آئیکن دوبارہ بنانے کے لیے: `node scripts/generate-icons.mjs` (خالص Node، کوئی dependency نہیں)
+- Service worker صرف غیر-localhost ماحول میں رجسٹر ہوتا ہے تاکہ dev تجربہ متاثر نہ ہو
 
 ## تصاویر
 `public/images/` میں پیک شدہ JPG assets موجود ہیں، اس لیے سائٹ کھلنے کے لیے کسی image download script کی ضرورت نہیں۔
@@ -53,9 +60,5 @@ Wikimedia Commons پر Jinnah Park, Rawalpindi کی واضح category:
 - Punjab Tourism: https://tourism.punjab.gov.pk/
 - PTDC: https://tourism.gov.pk/
 
-## ممکنہ ڈومین نام
-رجسٹریشن دستیابی registrar/RDAP پر آخری بار ضرور چیک کریں:
-- jinnahparkrawalpindi.com
-- visitjinnahpark.pk
-- jinnahparkrwp.com
-- rawalpindijinnahpark.com
+## ڈومین
+حتمی پروڈکشن ڈومین: `jinnahpark.com`

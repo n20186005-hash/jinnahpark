@@ -19,16 +19,20 @@ const absoluteImage = Astro.site ? new URL(image, Astro.site).toString() : undef
     <title>{title}</title>
     <meta name="description" content={description} />
     {absoluteUrl && <link rel="canonical" href={absoluteUrl} />}
+    <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" sizes="32x32" />
     <link rel="icon" href="/favicon-16.png" sizes="16x16" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     {absoluteUrl && <meta property="og:url" content={absoluteUrl} />}
     {absoluteImage && <meta property="og:image" content={absoluteImage} />}
+    <meta property="og:image:alt" content="Jinnah Park (جناح پارک) - Main view in Rawalpindi, Punjab, Pakistan" />
     <meta property="og:locale" content="ur_PK" />
+    <meta name="twitter:image:alt" content="Jinnah Park (جناح پارک) - Rawalpindi" />
     <meta name="twitter:card" content="summary_large_image" />
     <script is:inline>
       window.__JP_CONSENT__ = (() => {
@@ -44,6 +48,13 @@ const absoluteImage = Astro.site ? new URL(image, Astro.site).toString() : undef
         window.gtag = gtag;
         gtag('js', new Date());
         gtag('config', 'G-HXM22WWPKP', { anonymize_ip: true });
+      }
+    </script>
+    <script is:inline>
+      if ('serviceWorker' in navigator && !/^(localhost|127\.0\.0\.1|0\.0\.0\.0)$/.test(location.hostname)) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
       }
     </script>
   </head>

@@ -1,0 +1,21 @@
+{
+  "name": "Jinnah Park, Rawalpindi — جناح پارک وزیٹر گائیڈ",
+  "short_name": "جناح پارک",
+  "description": "آزاد، غیر منافع بخش وزیٹر گائیڈ: جناح پارک راولپنڈی کی تاریخ، مقام، نقشہ، اوقات، سہولیات، موسم اور آس پاس کے مقامات۔",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fffdf8",
+  "theme_color": "#245c35",
+  "lang": "ur-PK",
+  "dir": "rtl",
+  "categories": ["travel", "tourism", "education"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

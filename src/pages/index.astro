@@ -2,8 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Weather from '../components/Weather.astro';
 
-const pageTitle = 'Jinnah Park Rawalpindi (جناح پارک) — وزیٹر گائیڈ، تاریخ اور سہولیات';
-const pageDescription = 'Jinnah Park (جناح پارک) راولپنڈی، پنجاب، پاکستان — آزاد وزیٹر گائیڈ: تاریخ، مقام، نقشہ، اوقات، پارکنگ، سہولیات، موسم، کھانے اور قریبی مقامات۔';
+const pageTitle = 'Jinnah Park Rawalpindi (جناح پارک) — Timings, Cinepax & Visitor Guide';
+const pageDescription = 'Jinnah Park (جناح پارک), Rawalpindi — visitor guide with timings, Cinepax cinema, restaurants, location map, parking, weather and FAQs. Plan your visit to جناح پارک راولپنڈی، پنجاب، پاکستان۔';
 const canonical = Astro.site ? new URL('/', Astro.site).toString() : undefined;
 const image = Astro.site ? new URL('/images/jinnah-park-hero.jpg', Astro.site).toString() : '/images/jinnah-park-hero.jpg';
 const siteOrigin = Astro.site ? Astro.site.origin : 'https://jinnahpark.com';
@@ -19,7 +19,7 @@ const attractionSchema = {
   image: [image],
   isAccessibleForFree: true,
   hasMap: 'https://maps.app.goo.gl/dXD85cQCFkmbErrWA',
-  telephone: '+92 311 5885849',
+  telephone: '+92 315 9734114',
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Mushtaq Baig Shaheed Road, Chaklala Cantt.',
@@ -36,7 +36,7 @@ const attractionSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.5',
-    reviewCount: '28730',
+    reviewCount: '28750',
     bestRating: '5'
   },
   openingHoursSpecification: [{
@@ -47,6 +47,8 @@ const attractionSchema = {
   }],
   sameAs: [
     'https://maps.app.goo.gl/dXD85cQCFkmbErrWA',
+    'https://tourism.punjab.gov.pk/',
+    'https://tourism.gov.pk/',
     'https://www.wikidata.org/wiki/Q6202662',
     'https://commons.wikimedia.org/wiki/Category:Jinnah_Park,_Rawalpindi',
     'https://en.wikipedia.org/wiki/Jinnah_Park_(Rawalpindi)'
@@ -61,12 +63,33 @@ const faq = [
   ['کیا خاندان اور بچوں کے لیے مناسب ہے؟','جناح پارک اپنے سبز میدانوں، واکنگ ایریاز اور تفریحی سہولیات کی وجہ سے خاندانوں کے لیے مقبول مقام ہے۔ بچوں کے ساتھ جاتے وقت مصروف اوقات میں اضافی نگرانی مفید رہتی ہے۔'],
   ['کیا پارک میں بیت الخلا (WC) کی سہولت ہے؟','جی ہاں، پارک کے اندر متعدد مقامات پر عوامی بیت الخلا موجود ہیں۔ خاندانوں اور بچوں کے ساتھ جانے والوں کے لیے ان کی صفائی پر خصوصی توجہ دی جاتی ہے۔'],
   ['کیا پارک کے قریب ہوٹل یا رہائش دستیاب ہے؟','پارک کے ارد گرد مختلف معیار کے ہوٹل اور گیسٹ ہاؤس موجود ہیں۔ ہم کسی مخصوص ادارے کی سفارش نہیں کرتے؛ نقشے پر تازہ جائزے اور قیمتیں دیکھ کر اپنی ضرورت کے مطابق انتخاب کریں۔'],
-  ['کیا پارک کے قریب پیٹرول پمپ ہیں؟','جی ہاں، پارک کے آس پاس کی مرکزی سڑکوں پر پیٹرول پمپ دستیاب ہیں۔ اگر آپ الیکٹرک گاڑی استعمال کر رہے ہیں تو چارجنگ پوائنٹس کی دستیابی سفر سے پہلے نقشے پر چیک کر لیں۔']
+  ['کیا پارک کے قریب پیٹرول پمپ ہیں؟','جی ہاں، پارک کے آس پاس کی مرکزی سڑکوں پر پیٹرول پمپ دستیاب ہیں۔ اگر آپ الیکٹرک گاڑی استعمال کر رہے ہیں تو چارجنگ پوائنٹس کی دستیابی سفر سے پہلے نقشے پر چیک کر لیں۔'],
+  ['کیا "Jinah Park"، "Jannah Park" یا "Jina Park" دراصل جناح پارک ہی ہے؟','جی ہاں، بہت سے لوگ تلفظ یا املا کی وجہ سے اسے Jinah Park، Jannah Park یا Jina Park لکھ دیتے ہیں، لیکن مراد راولپنڈی کا جناح پارک ہی ہے۔ صحیح املا Jinnah Park ہے۔'],
+  ['جناح پارک میں Cinepax (سینما) کا نمبر کیا ہے؟','کمپلیکس میں Cinepax نامی ملٹی پلیکس سینما موجود ہے۔ ٹکٹ اور شوز کی تازہ معلومات کے لیے پارک کا رابطہ نمبر یا Cinepax کی آفیشل سائٹ دیکھیں؛ سینما کے اوقات پارک کے عمومی اوقات سے مختلف ہو سکتے ہیں۔'],
+  ['جناح پارک میں کھانے اور فاسٹ فوڈ کیا ملتا ہے؟','پارک کے اندر اور اطراف فاسٹ فوڈ، خاندانی ریستوران، کافی شاپس اور آئس کریم کی دکانیں موجود ہیں۔ برانچوں کے اوقات روانگی سے پہلے تصدیق کر لیں۔']
 ];
 const faqSchema = {
   '@context':'https://schema.org',
   '@type':'FAQPage',
   mainEntity: faq.map(([q,a]) => ({ '@type':'Question', name:q, acceptedAnswer:{ '@type':'Answer', text:a } }))
+};
+
+// English FAQ（与乌尔都语 FAQ 并存，针对英文搜索 / AI 概览卡片）
+const englishFaq = [
+  ['Where is Jinnah Park located?','Jinnah Park is located on Mushtaq Baig Shaheed Road, Chaklala Cantt., Rawalpindi, 46000, Pakistan. Searching “Jinnah Park Rawalpindi” on Google Maps is the easiest way to find it.'],
+  ['What are the opening hours of Jinnah Park?','Public listings indicate general hours from 06:00 to 23:59 daily. Hours for special facilities, the cinema, and restaurants may vary, so verify before you go.'],
+  ['Is Jinnah Park free to visit?','Yes, Jinnah Park is a public space and is free to enter year-round. Some on-site operators (cinema, bowling, rides, parking) may charge separately.'],
+  ['How do I get to Jinnah Park from Islamabad?','From Islamabad, take IJP Road and the Expressway; the park is about 30–35 km from Islamabad International Airport (ISB), roughly a 40–50 minute drive. Ride-hailing apps and taxis are also available.'],
+  ['What is there to do near Jinnah Park?','Nearby attractions include Ayub National Park and the Pakistan Army Museum, both in Rawalpindi and easy to combine in a single day trip.'],
+  ['Is Jinnah Park family friendly?','Yes, with green lawns, walking areas, and recreational facilities, Jinnah Park is popular with families. Extra supervision during busy hours is recommended with children.'],
+  ['Looking for Jinah Park, Jannah Park or Jina Park in Rawalpindi?','Those are common misspellings — they all refer to Jinnah Park, the public park on Mushtaq Baig Shaheed Road, Chaklala Cantt., Rawalpindi.'],
+  ['What is the Cinepax / cinema number at Jinnah Park?','Jinnah Park has an on-site Cinepax multiplex cinema. For showtimes and tickets, check the Cinepax listing or call the park’s contact line; cinema hours may differ from the park’s general hours.'],
+  ['What restaurants and fast food are at Jinnah Park?','The complex includes fast-food outlets, family restaurants, coffee shops and ice-cream stalls. Hours for food outlets can differ from the park’s general opening hours.']
+];
+const englishFaqSchema = {
+  '@context':'https://schema.org',
+  '@type':'FAQPage',
+  mainEntity: englishFaq.map(([q,a]) => ({ '@type':'Question', name:q, acceptedAnswer:{ '@type':'Answer', text:a } }))
 };
 const websiteSchema = {
   '@context': 'https://schema.org',
@@ -124,6 +147,7 @@ const facilities = [
 <BaseLayout title={pageTitle} description={pageDescription} path="/">
   <script is:inline type="application/ld+json" set:html={JSON.stringify(attractionSchema)}></script>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(englishFaqSchema)}></script>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)}></script>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
 
@@ -148,9 +172,9 @@ const facilities = [
           <p class="mt-2 text-2xl font-semibold text-green-100" dir="ltr">Jinnah Park, Rawalpindi</p>
           <p class="mt-6 max-w-xl text-lg leading-9 text-white/90">راولپنڈی کے معروف شہری تفریحی مقامات میں سے ایک، جہاں سبز میدان، واکنگ ایریاز، خاندانی سرگرمیاں، سینما اور کھانے کے اختیارات ایک ہی کمپلیکس کے آس پاس ملتے ہیں۔</p>
           <div class="mt-7 flex flex-wrap gap-3 text-sm">
-            <span class="rounded-full bg-white/12 px-4 py-2">★ 4.5 · 28,730 جائزے</span>
-            <span class="rounded-full bg-white/12 px-4 py-2">☎ +92 311 5885849</span>
-            <span class="rounded-full bg-white/12 px-4 py-2">H3H9+XX · Rawalpindi</span>
+            <span class="rounded-full bg-white/12 px-4 py-2">★ 4.5 · 28,750 جائزے</span>
+            <span class="rounded-full bg-white/12 px-4 py-2">☎ +92 315 9734114</span>
+            <span class="rounded-full bg-white/12 px-4 py-2">H3MC+MX6 · Rawalpindi</span>
           </div>
         </div>
       </div>
@@ -250,6 +274,33 @@ const facilities = [
 
     <Weather />
 
+    <section id="موسمی-حکمت" class="border-y border-green-900/10 bg-[#eef3e9] py-16 md:py-24">
+      <div class="shell">
+        <p class="eyebrow">موسم اور بہترین وقت</p>
+        <h2 class="section-title mt-2">موسمی حکمت عملی</h2>
+        <p class="mt-4 max-w-3xl leading-8 text-slate-600">یہ جائزہ راولپنڈی کے عمومی موسمی رجحانات پر مبنی ہے (خطے کا موسم گرمیوں میں شدید اور سردیوں میں نرم رہتا ہے)۔ یہ عمومی رہنمائی ہے؛ روانگی سے پہلے موسم کی تازہ پیشن گوئی ضرور دیکھیں۔</p>
+        <div class="mt-8 overflow-x-auto">
+          <table class="w-full border-collapse text-right text-sm">
+            <thead>
+              <tr class="bg-green-950 text-white">
+                <th class="p-3 font-bold">موسم</th>
+                <th class="p-3 font-bold">عمومی درجہ حرارت</th>
+                <th class="p-3 font-bold">سفر کے لیے تجاویز</th>
+                <th class="p-3 font-bold">پرکشش پہلو</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-green-900/10">
+              <tr class="bg-white/70"><td class="p-3 font-bold text-green-950">بہار (مارچ–مئی)</td><td class="p-3">20–35°C، خوشگوار</td><td class="p-3">سال کا بہترین وقت؛ صبح کی سیر کریں</td><td class="p-3">ہریالی، پھول، تہوار</td></tr>
+              <tr class="bg-white/40"><td class="p-3 font-bold text-green-950">گرمیاں (جون–اگست)</td><td class="p-3">32–42°C، شدید گرمی</td><td class="p-3">شام کو جائیں، پانی ساتھ رکھیں، دوپہر کی دھوپ سے بچیں</td><td class="p-3">شام کو کم بھیڑ</td></tr>
+              <tr class="bg-white/70"><td class="p-3 font-bold text-green-950">برسات (جولائی–ستمبر)</td><td class="p-3">نمی زیادہ، بوندا باندی</td><td class="p-3">چھتری رکھیں، زمین پر چکناہٹ کا خیال رکھیں</td><td class="p-3">سرسبزی عروج پر</td></tr>
+              <tr class="bg-white/40"><td class="p-3 font-bold text-green-950">خزاں (اکتوبر–نومبر)</td><td class="p-3">22–33°C، دوبارہ خوشگوار</td><td class="p-3">سیر کے لیے بہترین مہینے</td><td class="p-3">صاف اور ٹھنڈی ہوائیں</td></tr>
+              <tr class="bg-white/70"><td class="p-3 font-bold text-green-950">سردیاں (دسمبر–فروری)</td><td class="p-3">5–20°C، ٹھنڈی صبحیں، دھند</td><td class="p-3">گرم کپڑے، دوپہر کا وقت منتخب کریں</td><td class="p-3">آرام دہ چہل قدمی</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <section id="سفر" class="shell py-16 md:py-24">
       <div class="grid gap-8 lg:grid-cols-2">
         <div>
@@ -263,6 +314,24 @@ const facilities = [
             <div class="card flex gap-4 p-6"><div class="info-icon">🚗</div><div><h3 class="font-black text-green-950">اپنی گاڑی</h3><p class="mt-2 leading-8 text-slate-600">جی پی ایس میں منزل <span dir="ltr">“Jinnah Park, Mushtaq Baig Shaheed Road, Chaklala Cantt.”</span> درج کریں۔ اسلام آباد سے <span dir="ltr">IJP Road</span> اور ایکسپریس وے کے ذریعے آسانی سے پہنچا جا سکتا ہے۔ پارک کے ارد گرد بڑی پارکنگ موجود ہے؛ مصروف شاموں اور ویک اینڈ پر جلدی جگہ منتخب کرنا بہتر ہے۔</p></div></div>
             <div class="card flex gap-4 p-6"><div class="info-icon">📍</div><div><h3 class="font-black text-green-950">پتہ</h3><p class="mt-2 leading-8 text-slate-600" dir="ltr">Mushtaq Baig Shaheed Road, Chaklala Cantt., Rawalpindi, 46000, Pakistan</p></div></div>
           </div>
+          <div class="mt-8 card overflow-hidden">
+            <table class="w-full border-collapse text-right text-sm">
+              <thead>
+                <tr class="bg-green-950 text-white">
+                  <th class="p-3 font-bold">ذریعہ</th>
+                  <th class="p-3 font-bold">تقریبی وقت</th>
+                  <th class="p-3 font-bold">نوٹ</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-green-900/10">
+                <tr class="bg-white/70"><td class="p-3 font-bold text-green-950">ہوائی اڈہ (ISB)</td><td class="p-3">40–50 منٹ</td><td class="p-3">ٹیکسی / رائیڈ ہیلنگ</td></tr>
+                <tr class="bg-white/40"><td class="p-3 font-bold text-green-950">میٹرو بس</td><td class="p-3">آخری 2–4 کلومیٹر رکشہ</td><td class="p-3">قریبی اسٹیشن سے شارٹ رائیڈ</td></tr>
+                <tr class="bg-white/70"><td class="p-3 font-bold text-green-950">ٹیکسی / ایپ</td><td class="p-3">درخواست پر فوری</td><td class="p-3">Careem / InDrive / Bykea</td></tr>
+                <tr class="bg-white/40"><td class="p-3 font-bold text-green-950">ریلوے اسٹیشن</td><td class="p-3">15–20 منٹ</td><td class="p-3">اسٹیشن سے ٹیکسی / رکشہ</td></tr>
+                <tr class="bg-white/70"><td class="p-3 font-bold text-green-950">اپنی گاڑی</td><td class="p-3">اسلام آباد سے 30–45 منٹ</td><td class="p-3">IJP Road / Expressway</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div class="card overflow-hidden p-3">
           <iframe title="جناح پارک راولپنڈی گوگل نقشہ" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5912.179057484699!2d73.06731487734208!3d33.57992867333843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38df935b4e538281%3A0xa6524410987d4e7!2sJinnah%20Park!5e1!3m2!1sur!2s!4v1788188597166!5m2!1sur!2s" width="100%" height="520" style="border:0;border-radius:18px" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
@@ -270,10 +339,75 @@ const facilities = [
       </div>
     </section>
 
+    <section id="منصوبہ-بندی" class="shell py-16 md:py-24">
+      <p class="eyebrow">اپنے گروپ کے مطابق</p>
+      <h2 class="section-title mt-2">لوگوں کے مطابق منصوبہ بندی</h2>
+      <p class="mt-4 max-w-3xl leading-8 text-slate-600">ہر سیاح کا انداز اور رفتار مختلف ہوتی ہے۔ ذیل میں تین تجاویز شدہ راستے دیے گئے ہیں تاکہ آپ اپنے ساتھیوں کے مطابق بہترین تجربہ منتخب کر سکیں۔</p>
+      <div class="mt-8 grid gap-5 md:grid-cols-3">
+        <article class="card p-7">
+          <span class="inline-block rounded-full bg-green-950/8 px-3 py-1 text-xs font-bold text-green-900">خاندان / بچے</span>
+          <h3 class="mt-3 text-xl font-black text-green-950">خاندانی سیر</h3>
+          <p class="mt-3 leading-8 text-slate-600">سبز میدانوں اور واکنگ ٹریک پر آہستہ چلنے کا اہتمام کریں، بچوں کے لیے کھلی جگہ اور WC کی سہولت کو ترجیح دیں، اور کھانے کے اختیارات کے قریب رہیں۔ مصروف شاموں میں اضافی نگرانی مفید ہے۔</p>
+          <ul class="mt-4 space-y-1 text-sm text-slate-600">
+            <li>• داخلی دروازے کے قریب پارکنگ</li>
+            <li>• سایہ دار بیٹھک اور lawn</li>
+            <li>• فیملی فوڈ کارنرز کے پاس</li>
+          </ul>
+        </article>
+        <article class="card p-7">
+          <span class="inline-block rounded-full bg-green-950/8 px-3 py-1 text-xs font-bold text-green-900">فوٹوگرافی / قدرت</span>
+          <h3 class="mt-3 text-xl font-black text-green-950">فوٹو اور قدرت</h3>
+          <p class="mt-3 leading-8 text-slate-600">سنہری گھنٹے (صبح جلدی یا شام کو) میں یونٹی ٹاورز اور فوارے کی روشنی بہترین رہتی ہے۔ کم بھیڑ والے اوقات میں آئیں تاکہ صاف فریم ملیں؛ فوکس کے لیے سبز حصوں اور فن پاروں کو شامل کریں۔</p>
+          <ul class="mt-4 space-y-1 text-sm text-slate-600">
+            <li>• یونٹی ٹاورز — عکاسی کا مرکز</li>
+            <li>• فوارہ — شام کی روشنی</li>
+            <li>• کم بھیڑ: صبح سویرے یا ہفتہ کے درمیان</li>
+          </ul>
+        </article>
+        <article class="card p-7">
+          <span class="inline-block rounded-full bg-green-950/8 px-3 py-1 text-xs font-bold text-green-900">کم جسمانی طاقت / رسائی</span>
+          <h3 class="mt-3 text-xl font-black text-green-950">آسان اور رسائی پذیر</h3>
+          <p class="mt-3 leading-8 text-slate-600">چپے اور ہموار راستوں کا انتخاب کریں، داخلی دروازے کے قریب پارکنگ اور بیٹھک کی جگہیں استعمال کریں، اور تھکاوٹ سے بچنے کے لیے چھوٹے چھوٹے وقفوں میں سیر کریں۔</p>
+          <ul class="mt-4 space-y-1 text-sm text-slate-600">
+            <li>• ہموار راہداریاں</li>
+            <li>• دروازے کے قریب پارکنگ</li>
+            <li>• وقفے اور بیٹھک کی جگہیں</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="راستے" class="border-y border-green-900/10 bg-[#f3f0e4] py-16 md:py-24">
+      <div class="shell">
+        <p class="eyebrow">تجویز کردہ راستے</p>
+        <h2 class="section-title mt-2">آدھے دن اور پورے دن کا منصوبہ</h2>
+        <div class="mt-8 grid gap-5 md:grid-cols-2">
+          <article class="card p-7">
+            <h3 class="text-xl font-black text-green-950">آدھا دن (تقریباً 2–3 گھنٹے)</h3>
+            <ol class="mt-4 space-y-2 text-slate-600">
+              <li class="flex gap-3"><span class="font-black text-green-900">1.</span><span>داخلی دروازے سے داخل ہوں اور مرکزی lawn میں چہل قدمی کریں۔</span></li>
+              <li class="flex gap-3"><span class="font-black text-green-900">2.</span><span>یونٹی ٹاورز اور قائدِ اعظم کا فن پارہ دیکھیں۔</span></li>
+              <li class="flex gap-3"><span class="font-black text-green-900">3.</span><span>فوارے کے پاس فوٹو اور آرام کریں۔</span></li>
+              <li class="flex gap-3"><span class="font-black text-green-900">4.</span><span>کھانے کے اختیارات سے تھوڑی سی تازہ کاری اور واپسی۔</span></li>
+            </ol>
+          </article>
+          <article class="card p-7">
+            <h3 class="text-xl font-black text-green-950">پورا دن (تقریباً 5–6 گھنٹے)</h3>
+            <ol class="mt-4 space-y-2 text-slate-600">
+              <li class="flex gap-3"><span class="font-black text-green-900">1.</span><span>صبح میں پارک کا پیدل جائزہ لیں اور تاریخی نشانیاں دیکھیں۔</span></li>
+              <li class="flex gap-3"><span class="font-black text-green-900">2.</span><span>دوپہر کو فیملی ریستوران میں کھانا اور آرام۔</span></li>
+              <li class="flex gap-3"><span class="font-black text-green-900">3.</span><span>شام کو فوارہ اور روشنیاں دیکھیں، اگر چاہیں تو ملٹی پلیکس کا آپشن۔</span></li>
+              <li class="flex gap-3"><span class="font-black text-green-900">4.</span><span>پارک کے بعد قریبی Ayub National Park یا Pakistan Army Museum بھی شامل کریں۔</span></li>
+            </ol>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="کھانا" class="bg-green-950 py-16 text-white md:py-20">
       <div class="shell">
         <p class="font-bold text-green-200">پارک کے دورے کے ساتھ</p><h2 class="mt-2 text-3xl font-black md:text-4xl">کھانے پینے کی اقسام</h2>
-        <p class="mt-4 max-w-3xl leading-8 text-white/75">پارک کے اندر اور اس کے فوری اطراف فاسٹ فوڈ، خاندانی ریستوران، کافی شاپس، آئس کریم اور روایتی اسنیکس کی دکانیں موجود ہیں۔ اس کے علاوہ کمپلیکس کا ایک حصہ شہر کے ابتدائی ملٹی پلیکس سینما میں سے ایک ہے، جہاں فلم اور کھانے کو ایک ہی دورے میں ملایا جا سکتا ہے۔ ہم کسی مخصوص برانڈ کی سفارش نہیں کرتے؛ برانچوں کے اوقات روانگی سے پہلے تازہ معلومات سے تصدیق کریں۔</p>
+        <p class="mt-4 max-w-3xl leading-8 text-white/75">پارک کے اندر اور اس کے فوری اطراف فاسٹ فوڈ، خاندانی ریستوران، کافی شاپس، آئس کریم اور روایتی اسنیکس کی دکانیں موجود ہیں۔ اس کے علاوہ کمپلیکس کا ایک حصہ شہر کے ابتدائی ملٹی پلیکس سینما (Cinepax) میں سے ایک ہے، جہاں فلم اور کھانے کو ایک ہی دورے میں ملایا جا سکتا ہے۔ ہم کسی مخصوص برانڈ کی سفارش نہیں کرتے؛ برانچوں کے اوقات روانگی سے پہلے تازہ معلومات سے تصدیق کریں۔</p>
         <div class="mt-8 grid gap-4 md:grid-cols-3">
           <article class="rounded-3xl border border-white/12 bg-white/8 p-6"><h3 class="text-xl font-black">فاسٹ فوڈ اور ڈرائیو تھرو</h3><p class="mt-2 leading-7 text-white/70">کمپلیکس کے اندر اور اطراف بین الاقوامی فاسٹ فوڈ ریستوران موجود ہیں؛ بعض میں ڈرائیو تھرو کی سہولت بھی ملتی ہے۔</p></article>
           <article class="rounded-3xl border border-white/12 bg-white/8 p-6"><h3 class="text-xl font-black">خاندانی ریستوران</h3><p class="mt-2 leading-7 text-white/70">پاکستانی اور بین الاقوامی کھانوں کے لیے فیملی ڈائننگ کے اختیارات پارک کے قریب دستیاب ہیں۔</p></article>
@@ -289,6 +423,68 @@ const facilities = [
         <article class="card p-7"><h3 class="text-xl font-black text-green-950">Ayub National Park</h3><p class="mt-3 leading-8 text-slate-600">راولپنڈی کا بڑا سبز تفریحی علاقہ؛ خاندان، کھلے میدان اور لمبی سیر کے لیے معروف۔</p></article>
         <article class="card p-7"><h3 class="text-xl font-black text-green-950">Pakistan Army Museum</h3><p class="mt-3 leading-8 text-slate-600">راولپنڈی کینٹ کے علاقے میں فوجی تاریخ سے متعلق مجموعوں اور نمائشوں کا اہم مقام۔</p></article>
         <article class="card p-7"><h3 class="text-xl font-black text-green-950">Liaquat Bagh</h3><p class="mt-3 leading-8 text-slate-600">راولپنڈی کے تاریخی شہری مقامات میں شامل؛ شہر کے مرکزی حصے کی سیر کے ساتھ جوڑا جا سکتا ہے۔</p></article>
+      </div>
+    </section>
+
+    <section id="سائنس-ذمہ-داری" class="shell py-16 md:py-24">
+      <p class="eyebrow">قدرت، تاریخ اور ذمہ داری</p>
+      <h2 class="section-title mt-2">سائنس اور زائرین کی ذمہ داری</h2>
+      <div class="mt-8 grid gap-8 lg:grid-cols-2">
+        <article class="card p-7">
+          <h3 class="text-xl font-black text-green-950">شہری ماحولیات</h3>
+          <p class="mt-3 leading-8 text-slate-600">جناح پارک راولپنڈی کا ایک اہم شہری سبز علاقہ ہے جہاں درخت، لان اور کھلی جگہیں مقامی پرندوں اور چھوٹے جانوروں کے لیے مسکن بنتی ہیں۔ یہ شہر کے درجہ حرارت کو معتدل رکھنے اور شہریوں کو تازہ ہوا فراہم کرنے میں مدد دیتا ہے۔</p>
+        </article>
+        <article class="card p-7">
+          <h3 class="text-xl font-black text-green-950">تاریخی ورثہ</h3>
+          <p class="mt-3 leading-8 text-slate-600">یہ مقام ایک تاریخی جیل کی جگہ پر بنا ہے۔ یہاں آنے والے زائرین سے گزارش ہے کہ فن پاروں، یادگاروں اور سبزہ زار کا احترام کریں اور انہیں نقصان سے بچائیں تاکہ آنے والی نسلیں بھی اس ورثے سے لطف اندوز ہو سکیں۔</p>
+        </article>
+      </div>
+      <div class="mt-8 card p-7">
+        <h3 class="text-xl font-black text-green-950">زائرین کی ذمہ داری — چند سادہ اصول</h3>
+        <ul class="mt-4 grid gap-3 sm:grid-cols-2 text-slate-600">
+          <li class="flex gap-2"><span class="text-green-900">✓</span><span>کوڑا کرکٹ ساتھ لے جائیں یا مخصوص ڈبوں میں ڈالیں (Zero Waste)۔</span></li>
+          <li class="flex gap-2"><span class="text-green-900">✓</span><span>آواز کم رکھیں تاکہ دوسرے زائرین پریشان نہ ہوں۔</span></li>
+          <li class="flex gap-2"><span class="text-green-900">✓</span><span>بچوں کی نگرانی کریں اور پودوں/فن پاروں کو نقصان نہ پہنچائیں۔</span></li>
+          <li class="flex gap-2"><span class="text-green-900">✓</span><span>پارک کے قواعد و ضوابط پر عمل کریں اور رات کے اوقات کا خیال رکھیں۔</span></li>
+        </ul>
+      </div>
+    </section>
+
+    {/* 英文语义绑定区块：在不删除乌尔都语内容的前提下，补充英文实体锚点以覆盖英文搜索与 AI 概览 */}
+    <section id="guide-en" class="shell space-y-14 py-16 md:py-24" dir="ltr">
+      <div>
+        <p class="eyebrow">Visitor Guide · English</p>
+        <h2 class="section-title mt-2">About Jinnah Park</h2>
+        <div class="mt-6 space-y-5 text-[1.05rem] leading-8 text-slate-700">
+          <p>Welcome to <strong>Jinnah Park</strong>, widely recognized as the central public park in Rawalpindi. Located in the heart of <strong>Rawalpindi</strong>, <strong>Punjab</strong>, <strong>Pakistan</strong>, this destination serves as a primary hub for travelers visiting the region.</p>
+          <p class="font-bold text-green-900">Jinnah Park → Rawalpindi → Punjab → Pakistan</p>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="section-title">Location &amp; How to Visit Jinnah Park in Rawalpindi</h2>
+        <p class="mt-4 max-w-3xl leading-8 text-slate-600">Jinnah Park is located on Mushtaq Baig Shaheed Road, Chaklala Cantt., Rawalpindi, 46000, Pakistan. It sits about 30–35 km from Islamabad International Airport (ISB), roughly a 40–50 minute drive. Visitors can reach it via the Rawalpindi–Islamabad Metrobus, ride-hailing apps (Careem, InDrive, Bykea), taxi, train (Rawalpindi Railway Station, ~5–6 km), or private car. Set your GPS to “Jinnah Park, Mushtaq Baig Shaheed Road, Chaklala Cantt.” for the most accurate route.</p>
+      </div>
+
+      <div>
+        <h2 class="section-title">Landmarks &amp; Attractions Around Jinnah Park</h2>
+        <p class="mt-4 max-w-3xl leading-8 text-slate-600">When visiting <strong>Jinnah Park</strong>, visitors can easily explore surrounding historical landmarks and points of interest, including <strong>Ayub National Park</strong> and <strong>Pakistan Army Museum</strong>. Both lie within Rawalpindi and can be combined into a single day of sightseeing.</p>
+      </div>
+
+      <div>
+        <h2 class="section-title">History &amp; Significance of Jinnah Park</h2>
+        <p class="mt-4 max-w-3xl leading-8 text-slate-600">The grounds of Jinnah Park were once the Central Jail Rawalpindi, established in 1882 and demolished in 1988 after prisoners were moved to Adiala Jail. The Rawalpindi Development Authority (RDA) began converting the historic site into a public park in 1995; the project was later handed to the Pakistan Army's X Corps, and the park finally opened to the public in 2006. The park is named after Muhammad Ali Jinnah, the founder of Pakistan.</p>
+        <p class="mt-3 text-sm leading-8 text-slate-500">Sources: Wikipedia (English), DAWN, and The News International public records.</p>
+      </div>
+    </section>
+
+    <section id="faq-en" class="border-y border-green-900/10 bg-white/55 py-16 md:py-20" dir="ltr">
+      <div class="shell max-w-4xl">
+        <p class="eyebrow">FAQ · English</p>
+        <h2 class="section-title mt-2">Frequently Asked Questions</h2>
+        <div class="mt-8 space-y-3">
+          {englishFaq.map(([q,a]) => <details class="card group p-5"><summary class="cursor-pointer list-none font-black text-green-950">{q}</summary><p class="mt-4 leading-8 text-slate-600">{a}</p></details>)}
+        </div>
       </div>
     </section>
 

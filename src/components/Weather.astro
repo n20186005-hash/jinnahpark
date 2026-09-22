@@ -5,13 +5,135 @@ import { getWeather, weatherCodeText, weatherCodeIcon, formatTimeHM, formatDayLa
 const weather = await getWeather();
 const current = weather?.current;
 const daily = weather?.daily;
+
+// ---- 面向游客的智能建议引擎：基于天气数据直接输出可执行建议（不展示气象术语） ----
+type Cat = 'clear' | 'cloudy' | 'fog' | 'rain' | 'showers' | 'storm' | 'snow';
+function catOf(code: number): Cat {
+  if (code === 0 || code === 1 || code === 2) return 'clear';
+  if (code === 3) return 'cloudy';
+  if (code === 45 || code === 48) return 'fog';
+  if (code >= 51 && code <= 67) return 'rain';
+  if (code >= 71 && code <= 77) return 'snow';
+  if (code >= 80 && code <= 82) return 'showers';
+  if (code >= 85 && code <= 86) return 'snow';
+  if (code >= 95) return 'storm';
+  return 'cloudy';
+}
+
+const dayCode = (daily?.weather_code?.[0] ?? current?.weather_code) ?? 0;
+const tmax = daily?.temperature_2m_max?.[0];
+const tmin = daily?.temperature_2m_min?.[0];
+const precipProb = daily?.precipitation_probability_max?.[0] ?? 0;
+const uv = daily?.uv_index_max?.[0] ?? 0;
+const wind = daily?.wind_speed_10m_max?.[0] ?? current?.wind_speed_10m ?? 0;
+const curPrecip = current?.precipitation ?? 0;
+
+const cat = catOf(dayCode);
+const raining = curPrecip > 0 || cat === 'rain' || cat === 'showers' || cat === 'storm';
+const heavyRain = [65, 66, 67, 75, 77, 82].includes(dayCode) || cat === 'storm';
+const bigDiff = tmax != null && tmin != null && tmax - tmin > 8;
+
+const outfit: string[] = [];
+const activity: string[] = [];
+const items: string[] = [];
+const risks: string[] = [];
+
+if (tmax != null && tmax >= 32) {
+  outfit.push('گرمی زیادہ ہے، ہلکے اور ہوا دار کپڑے پہنیں اور دوپہر کی تیز دھوپ سے بچیں۔');
+  items.push('کافی مقدار میں پانی');
+}
+if (tmax != null && tmax <= 10) {
+  outfit.push('سردی ہے، گرم کپڑے اور جیکٹ پہنیں۔');
+  items.push('گرم کوٹ اور سکارف');
+}
+if (bigDiff) {
+  outfit.push('دن اور رات کا درجہ حرارت کافی مختلف ہے — ایک ہلکا کوٹ ساتھ رکھیں تاکہ کپڑے بدل سکیں۔');
+}
+if (uv >= 5) {
+  outfit.push('الٹرا وائلٹ شعاعیں طاقتور ہیں، سن اسکرین لگائیں۔');
+  items.push('سن اسکرین، دھوپ کی عینک، ٹوپی');
+}
+if (wind >= 30) {
+  outfit.push('ہوائیں تیز ہیں — ٹوپی مضبوطی سے ساتھ رکھیں (ہوا اڑا سکتی ہے)۔');
+}
+if (precipProb >= 60 || raining) {
+  outfit.push('بارش کا امکان زیادہ ہے — پانی روکنے والا کوٹ یا چھتری ساتھ رکھیں۔');
+}
+
+if (cat === 'clear') {
+  activity.push('موسم صاف ہے، باہر کی سیر اور فوٹو کے لیے بہترین وقت ہے۔');
+} else if (cat === 'cloudy') {
+  activity.push('روشنی نرم ہے، فوٹو گرافی اور لمبی سیر کے لیے موزوں ہے۔');
+} else if (cat === 'fog') {
+  activity.push('دھند کی وجہ سے دور کی نظر کمزور ہو سکتی ہے — احتیاط سے چلیں۔');
+}
+if (tmax != null && tmax >= 32) {
+  activity.push('دوپہر کا وقت باہر گزارنے سے بچیں؛ صبح جلدی یا شام کو سیر کا وقت منتخب کریں۔');
+}
+if (precipProb >= 60 || raining) {
+  activity.push('بارش کے باعث کھلی جگہوں کا تجربہ کمزور ہو سکتا ہے — اگر بارش ہو تو قریبی انڈور آپشنز (جیسے ملٹی پلیکس) پر غور کریں۔');
+}
+
+if (precipProb >= 60 || raining) {
+  items.push('چھتری یا رین کوٹ');
+}
+
+if (cat === 'storm') {
+  risks.push('بجلی گرنے کا خطرہ: درختوں، کھلے میدانوں اور پانی کے قریب نہ ٹھہریں۔');
+}
+if (heavyRain && cat !== 'storm') {
+  risks.push('تیز بارش: پھسلن والی جگہوں اور نشیبی علاقوں سے بچیں۔');
+}
+if (wind >= 50) {
+  risks.push('تیز ہوائیں: اشتہاری بورڈز اور گرنے والی چیزوں سے دور رہیں۔');
+}
+if (tmax != null && tmax >= 40) {
+  risks.push('شدید گرمی: کافی پانی پئیں اور دھوپ میں زیادہ نہ رہیں۔');
+}
+if (cat === 'fog') {
+  risks.push('دھند: نظر کمزور، احتیاط سے چلیں۔');
+}
 ---
 
 {weather && current && daily && (
   <section id="موسم" class="border-y border-green-900/10 bg-[#eef3e9] py-16 md:py-24">
     <div class="shell">
       <p class="eyebrow">موسم</p>
-      <h2 class="section-title mt-2">موجودہ موسم اور 5 روزہ پیشن گوئی</h2>
+      <h2 class="section-title mt-2">موجودہ موسم اور 7 روزہ پیشن گوئی</h2>
+      <div class="mt-6 grid gap-4 md:grid-cols-3">
+        {risks.length > 0 && (
+          <div class="rounded-2xl border border-red-300 bg-red-50 p-5 md:col-span-3">
+            <p class="font-black text-red-700">⚠️ خطرے کی تنبیہ</p>
+            <ul class="mt-2 space-y-1 text-red-700">
+              {risks.map((r) => <li class="flex gap-2"><span>⚠️</span><span>{r}</span></li>)}
+            </ul>
+          </div>
+        )}
+        {outfit.length > 0 && (
+          <div class="card p-6">
+            <p class="font-black text-green-950">سفری لباس</p>
+            <ul class="mt-3 space-y-2 text-slate-600">{outfit.map((o) => <li class="flex gap-2"><span class="text-green-700">✓</span><span>{o}</span></li>)}</ul>
+          </div>
+        )}
+        {activity.length > 0 && (
+          <div class="card p-6">
+            <p class="font-black text-green-950">سیر کا انتظام</p>
+            <ul class="mt-3 space-y-2 text-slate-600">{activity.map((a) => <li class="flex gap-2"><span class="text-green-700">✓</span><span>{a}</span></li>)}</ul>
+          </div>
+        )}
+        {items.length > 0 && (
+          <div class="card p-6">
+            <p class="font-black text-green-950">ساتھ رکھیں</p>
+            <ul class="mt-3 space-y-2 text-slate-600">{items.map((i) => <li class="flex gap-2"><span class="text-green-700">✓</span><span>{i}</span></li>)}</ul>
+          </div>
+        )}
+        {outfit.length === 0 && activity.length === 0 && items.length === 0 && risks.length === 0 && (
+          <div class="card p-6 md:col-span-3">
+            <p class="font-black text-green-950">آج کا مشورہ</p>
+            <p class="mt-2 text-slate-600">موسم معتدل اور موزوں ہے — خاص تیاری کی ضرورت نہیں، بس ایک پرسکون سیر کا لطف اٹھائیں۔</p>
+          </div>
+        )}
+      </div>
       <div class="mt-8 grid gap-6 lg:grid-cols-[.9fr_1.1fr]">
         <article class="card p-7 md:p-8">
           <div class="flex items-start justify-between gap-4">
@@ -33,7 +155,7 @@ const daily = weather?.daily;
           </dl>
           <p class="mt-5 text-sm leading-7 text-slate-600">طلوع آفتاب: <strong>{formatTimeHM(daily.sunrise[0] ?? '')}</strong> • غروب آفتاب: <strong>{formatTimeHM(daily.sunset[0] ?? '')}</strong></p>
         </article>
-        <div class="grid gap-3 sm:grid-cols-2">
+        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {daily.time.map((t, i) => (
             <article class="card p-5">
               <p class="text-sm font-black text-green-950">{formatDayLabel(t)}</p>
@@ -44,7 +166,7 @@ const daily = weather?.daily;
           ))}
         </div>
       </div>
-      <p class="mt-5 text-xs leading-6 text-slate-500">موسم کا ڈیٹا Open-Meteo کے مفت عوامی API سے حاصل کیا جاتا ہے اور تقریباً 30 منٹ تک کیش کیا جاتا ہے۔ سفر سے پہلے ہمیشہ مقامی ذرائع سے تازہ معلومات کی تصدیق کریں۔</p>
+      <p class="mt-5 text-xs leading-6 text-slate-500">موسم کی معلومات تقریباً 30 منٹ تک تازہ رہتی ہیں۔ سفر سے پہلے ہمیشہ مقامی ذرائع سے تازہ پیشن گوئی کی تصدیق کریں۔</p>
     </div>
   </section>
 )}

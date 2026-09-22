@@ -1,7 +1,28 @@
+# Dependencies
 node_modules/
+.pnpm-store/
+
+# Build output (uploaded manually to Cloudflare Workers)
 dist/
-.astro/
 .wrangler/
 .dev.vars
-.env
+
+# Astro cache
+.astro/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Editor / OS
+.vscode/
+.idea/
 .DS_Store
+Thumbs.db
+
+# Local temp / secrets
+*.local.mjs
+scripts/*.local.*
+.env
+.env.*

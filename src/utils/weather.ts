@@ -1,5 +1,5 @@
-// Open-Meteo 免费天气 API 的服务端获取 + 缓存工具
-// API: https://open-meteo.com/en/docs — 无需密钥，适合非盈利项目
+// Open-Meteo 天气 API 的服务端获取与缓存工具
+// API: https://open-meteo.com/en/docs
 // 缓存策略：Cloudflare Cache API（跨请求/跨区域）+ 进程内存缓存（本地 dev fallback）
 
 export interface CurrentWeather {
@@ -19,6 +19,8 @@ export interface DailyWeather {
   temperature_2m_max: number[];
   temperature_2m_min: number[];
   precipitation_probability_max: number[];
+  uv_index_max: number[];
+  wind_speed_10m_max: number[];
   sunrise: string[];
   sunset: string[];
 }
@@ -63,7 +65,7 @@ function buildApiUrl(): string {
   url.searchParams.set('latitude', LATITUDE);
   url.searchParams.set('longitude', LONGITUDE);
   url.searchParams.set('timezone', TIMEZONE);
-  url.searchParams.set('forecast_days', '5');
+  url.searchParams.set('forecast_days', '7');
   url.searchParams.set('windspeed_unit', 'kmh');
   url.searchParams.set(
     'current',
@@ -71,7 +73,7 @@ function buildApiUrl(): string {
   );
   url.searchParams.set(
     'daily',
-    'weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset'
+    'weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,uv_index_max,wind_speed_10m_max,sunrise,sunset'
   );
   return url.toString();
 }

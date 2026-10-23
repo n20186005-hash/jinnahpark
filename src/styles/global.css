@@ -29,6 +29,9 @@ a { color: inherit; }
 .btn-primary { background: var(--leaf); color:white; box-shadow:0 10px 25px rgba(36,92,53,.25); }
 .btn-primary:hover { transform:translateY(-1px); background:#194a2a; }
 .btn-soft { background:#edf4ea; color:#214d2d; border:1px solid #d9e7d4; }
+.btn-map { background:#fff; color:#17331f; }
 .info-icon { width:2.6rem; height:2.6rem; border-radius:16px; display:grid; place-items:center; background:#edf4e8; color:#245c35; font-size:1.25rem; flex:0 0 auto; }
 .hero-overlay { background: linear-gradient(90deg, rgba(10,28,14,.84) 0%, rgba(10,28,14,.62) 45%, rgba(10,28,14,.16) 72%, rgba(10,28,14,.03) 100%); }
 @media (max-width: 768px) { .hero-overlay { background:linear-gradient(180deg, rgba(10,28,14,.28), rgba(10,28,14,.86)); } }
+
+bdi[dir="ltr"]{direction:ltr;unicode-bidi:isolate;display:inline-block} .credit a{text-decoration:underline} .prose-urdu a{text-decoration:underline} .credit{font-size:.8rem;line-height:1.9} :target{scroll-margin-top:6rem}

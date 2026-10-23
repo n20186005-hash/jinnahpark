@@ -1,24 +1,8 @@
-/mnt/data/jinnah-park-rawalpindi-complete/.env.example
-/mnt/data/jinnah-park-rawalpindi-complete/.gitignore
-/mnt/data/jinnah-park-rawalpindi-complete/.node-version
-/mnt/data/jinnah-park-rawalpindi-complete/FILE-INVENTORY.txt
-/mnt/data/jinnah-park-rawalpindi-complete/IMAGE-CREDITS.md
-/mnt/data/jinnah-park-rawalpindi-complete/README.md
-/mnt/data/jinnah-park-rawalpindi-complete/astro.config.mjs
-/mnt/data/jinnah-park-rawalpindi-complete/package.json
-/mnt/data/jinnah-park-rawalpindi-complete/pnpm-lock.yaml
-/mnt/data/jinnah-park-rawalpindi-complete/public/apple-touch-icon.png
-/mnt/data/jinnah-park-rawalpindi-complete/public/favicon-16.png
-/mnt/data/jinnah-park-rawalpindi-complete/public/favicon-32.png
-/mnt/data/jinnah-park-rawalpindi-complete/public/favicon.svg
-/mnt/data/jinnah-park-rawalpindi-complete/public/images/jinnah-park-fountain.jpg
-/mnt/data/jinnah-park-rawalpindi-complete/public/images/jinnah-park-hero.jpg
-/mnt/data/jinnah-park-rawalpindi-complete/public/logo.svg
-/mnt/data/jinnah-park-rawalpindi-complete/src/layouts/BaseLayout.astro
-/mnt/data/jinnah-park-rawalpindi-complete/src/pages/cookies.astro
-/mnt/data/jinnah-park-rawalpindi-complete/src/pages/index.astro
-/mnt/data/jinnah-park-rawalpindi-complete/src/pages/privacy.astro
-/mnt/data/jinnah-park-rawalpindi-complete/src/pages/terms.astro
-/mnt/data/jinnah-park-rawalpindi-complete/src/styles/global.css
-/mnt/data/jinnah-park-rawalpindi-complete/tsconfig.json
-/mnt/data/jinnah-park-rawalpindi-complete/wrangler.jsonc
+Application: src/pages/index.astro; cookies/privacy/terms/404 pages; shared BaseLayout.
+Native forecast: src/utils/weather.ts and src/components/Weather.astro (SSR, no new API route).
+Routing: src/worker.js and src/middleware.ts; wrangler.jsonc; generated adapter configuration.
+Analytics: public/analytics.js and existing cookie-page form handlers.
+Assets: public/images two licensed historical photographs in their current Commons revisions; icons/logo/manifest/robots/service worker.
+Image provenance and licences: IMAGE-CREDITS.md and public/IMAGE-CREDITS.txt.
+Build: package.json and pnpm-lock.yaml; exact native script policy in pnpm-workspace.yaml; scripts/sanitize-worker-output.mjs.
+Production verification is separate from local checks/build/dry-run.

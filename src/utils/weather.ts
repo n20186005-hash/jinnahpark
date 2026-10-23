@@ -32,12 +32,12 @@ export interface WeatherResponse {
 }
 
 const API_BASE = 'https://api.open-meteo.com/v1/forecast';
-const LATITUDE = '33.57992867333843'; // Jinnah Park, Rawalpindi
-const LONGITUDE = '73.06731487734208';
+const LATITUDE = '33.5799287'; // Jinnah Park, Rawalpindi
+const LONGITUDE = '73.0698898';
 const TIMEZONE = 'Asia/Karachi';
 const CACHE_TTL_MS = 30 * 60 * 1000; // 30 分钟
 const CACHE_KEY = 'https://jinnahpark-weather.local/jinnah-park-forecast';
-const FETCH_TIMEOUT_MS = 8000;
+const FETCH_TIMEOUT_MS = 4500;
 
 type MemoryEntry = { data: WeatherResponse; at: number };
 let memory: MemoryEntry | null = null;
@@ -78,16 +78,42 @@ function buildApiUrl(): string {
   return url.toString();
 }
 
+// Provider time is local Asia/Karachi. Never present unbounded stale data as current.
+export function parseWeather(raw: unknown): WeatherResponse {
+ const d=raw as WeatherResponse;
+ if(!d?.current||!d.daily||d.timezone!=='Asia/Karachi')throw new Error('Incomplete weather');
+ const c=d.current,x=d.daily;
+ const numeric=(v:unknown,min:number,max:number):number=>{if(typeof v!=='number'||!Number.isFinite(v)||v<min||v>max)throw new Error('Invalid weather value');return v;};
+ const codes=new Set([0,1,2,3,45,48,51,53,55,56,57,61,63,65,66,67,71,73,75,77,80,81,82,85,86,95,96,99]);
+ const code=(v:unknown)=>{if(typeof v!=='number'||!codes.has(v))throw new Error('Invalid weather code');};
+ if(typeof c.time!=='string'||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(c.time))throw new Error('Missing weather time');
+ const stamp=Date.parse(c.time+'+05:00'),age=Date.now()-stamp;
+ if(!Number.isFinite(stamp)||age>3*60*60*1000||age< -15*60*1000)throw new Error('Weather time outside freshness window');
+ const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Karachi',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+ if(c.time.slice(0,10)!==today)throw new Error('Weather date is not today');
+ numeric(c.temperature_2m,-100,65);numeric(c.apparent_temperature,-120,80);numeric(c.relative_humidity_2m,0,100);numeric(c.wind_speed_10m,0,500);numeric(c.precipitation,0,500);if(c.is_day!==0&&c.is_day!==1)throw new Error('Invalid daylight');code(c.weather_code);
+ const keys=['time','weather_code','temperature_2m_max','temperature_2m_min','precipitation_probability_max','uv_index_max','wind_speed_10m_max','sunrise','sunset'] as const;
+ if(keys.some(k=>!Array.isArray(x[k])||x[k].length!==7))throw new Error('Incomplete forecast');
+ x.time.forEach((date,i)=>{
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||!Number.isFinite(Date.parse(date))||new Date(date).toISOString().slice(0,10)!==date)throw new Error('Invalid forecast date');
+  if(i===0&&date!==today||i>0&&Date.parse(date)-Date.parse(x.time[i-1])!==86400000)throw new Error('Forecast date sequence');
+  const min=numeric(x.temperature_2m_min[i],-100,65),max=numeric(x.temperature_2m_max[i],-100,65);if(min>max)throw new Error('Inverted temperature range');
+  code(x.weather_code[i]);numeric(x.precipitation_probability_max[i],0,100);numeric(x.uv_index_max[i],0,50);numeric(x.wind_speed_10m_max[i],0,500);
+  for(const value of[x.sunrise[i],x.sunset[i]])if(typeof value!=='string'||value.slice(0,10)!==date||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(value)||!Number.isFinite(Date.parse(value+'+05:00')))throw new Error('Invalid solar time');
+ });
+ return d;
+}
+
 async function fetchFromNetwork(): Promise<WeatherResponse> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   try {
     const res = await fetch(buildApiUrl(), {
-      headers: { Accept: 'application/json', 'User-Agent': 'jinnahpark-guide/1.0 (non-profit visitor guide)' },
+      headers: { Accept: 'application/json', 'User-Agent': 'jinnahpark-guide/1.0' },
       signal: controller.signal
     });
     if (!res.ok) throw new Error(`Open-Meteo HTTP ${res.status}`);
-    return (await res.json()) as WeatherResponse;
+    return parseWeather(await res.json());
   } finally {
     clearTimeout(timer);
   }
@@ -99,7 +125,7 @@ async function readFromCfCache(): Promise<WeatherResponse | null> {
   try {
     const hit = await cache.match(new Request(CACHE_KEY));
     if (!hit) return null;
-    return (await hit.json()) as WeatherResponse;
+    return parseWeather(await hit.json());
   } catch {
     return null;
   }
@@ -130,7 +156,9 @@ export async function getWeather(): Promise<WeatherResponse | null> {
   }
 
   // 2. 进程内缓存（30 分钟 TTL）
-  if (memory && Date.now() - memory.at < CACHE_TTL_MS) return memory.data;
+  if (memory && Date.now() - memory.at < CACHE_TTL_MS) {
+    try { return parseWeather(memory.data); } catch { memory = null; }
+  }
 
   // 3. 网络请求
   try {
@@ -140,7 +168,7 @@ export async function getWeather(): Promise<WeatherResponse | null> {
     return data;
   } catch {
     // 网络失败时尽量返回过期内存数据
-    return memory ? memory.data : null;
+    return null;
   }
 }
 
@@ -201,6 +229,6 @@ export function formatTimeHM(iso: string): string {
 
 /** 'YYYY-MM-DD' → 乌尔都语 "پیر، 1"；用当地正午解析避免时区偏移 */
 export function formatDayLabel(dateStr: string): string {
-  const d = new Date(`${dateStr}T12:00:00`);
-  return new Intl.DateTimeFormat('ur-PK', { weekday: 'long', day: 'numeric' }).format(d);
+  const d = new Date(`${dateStr}T12:00:00+05:00`);
+  return new Intl.DateTimeFormat('ur-PK', { weekday: 'long', day: 'numeric', month: 'short', timeZone: 'Asia/Karachi' }).format(d);
 }

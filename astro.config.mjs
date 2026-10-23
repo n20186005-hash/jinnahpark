@@ -9,8 +9,8 @@ const site = configuredSite ? configuredSite : 'https://jinnahpark.com';
 export default defineConfig({
   site,
   output: 'server',
-  adapter: cloudflare(),
-  integrations: site ? [sitemap()] : [],
+  adapter: cloudflare({ configPath: './wrangler.jsonc' }),
+  integrations: site ? [sitemap({ filter: url => !new URL(url).pathname.startsWith('/404') })] : [],
   vite: {
     plugins: [tailwindcss()]
   }

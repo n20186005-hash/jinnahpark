@@ -61,9 +61,9 @@ if (precipProb >= 60 || raining) {
 }
 
 if (cat === 'clear') {
-  activity.push('موسم صاف ہے، باہر کی سیر اور فوٹو کے لیے بہترین وقت ہے۔');
+  activity.push('آسمان صاف ہے؛ گرمی، دھوپ اور ہوا دیکھ کر باہر کی سیر کا دورانیہ منتخب کریں۔');
 } else if (cat === 'cloudy') {
-  activity.push('روشنی نرم ہے، فوٹو گرافی اور لمبی سیر کے لیے موزوں ہے۔');
+  activity.push('بادل روشنی نرم کر سکتے ہیں؛ درجہ حرارت، نمی اور بارش کے مطابق سیر کا وقت منتخب کریں۔');
 } else if (cat === 'fog') {
   activity.push('دھند کی وجہ سے دور کی نظر کمزور ہو سکتی ہے — احتیاط سے چلیں۔');
 }
@@ -99,7 +99,7 @@ if (cat === 'fog') {
   <section id="موسم" class="border-y border-green-900/10 bg-[#eef3e9] py-16 md:py-24">
     <div class="shell">
       <p class="eyebrow">موسم</p>
-      <h2 class="section-title mt-2">موجودہ موسم اور 7 روزہ پیشن گوئی</h2>
+      <h2 class="section-title mt-2">موجودہ موسم اور <bdi dir="ltr">7</bdi> روزہ پیشن گوئی</h2>
       <div class="mt-6 grid gap-4 md:grid-cols-3">
         {risks.length > 0 && (
           <div class="rounded-2xl border border-red-300 bg-red-50 p-5 md:col-span-3">
@@ -130,7 +130,7 @@ if (cat === 'fog') {
         {outfit.length === 0 && activity.length === 0 && items.length === 0 && risks.length === 0 && (
           <div class="card p-6 md:col-span-3">
             <p class="font-black text-green-950">آج کا مشورہ</p>
-            <p class="mt-2 text-slate-600">موسم معتدل اور موزوں ہے — خاص تیاری کی ضرورت نہیں، بس ایک پرسکون سیر کا لطف اٹھائیں۔</p>
+            <p class="mt-2 text-slate-600">مقامی حالات دیکھ کر سیر کا دورانیہ منتخب کریں اور پانی ساتھ رکھیں۔</p>
           </div>
         )}
       </div>
@@ -139,34 +139,36 @@ if (cat === 'fog') {
           <div class="flex items-start justify-between gap-4">
             <div>
               <p class="text-sm font-bold text-green-800">ابھی کا موسم</p>
-              <p class="mt-3 text-6xl font-black leading-none text-green-950" dir="ltr">{Math.round(current.temperature_2m)}°C</p>
+              <p class="mt-3 text-6xl font-black leading-none text-green-950" dir="ltr"><bdi dir="ltr">{Math.round(current.temperature_2m)}°C</bdi></p>
               <p class="mt-3 text-lg font-black text-green-900">{weatherCodeIcon(current.weather_code)} {weatherCodeText(current.weather_code)}</p>
             </div>
             <div class="rounded-2xl bg-green-950 px-4 py-3 text-center text-sm text-white">
               <p class="text-xs text-green-200">آج کی حد</p>
-              <p class="mt-1 font-black" dir="ltr">{Math.round(daily.temperature_2m_max[0] ?? 0)}° / {Math.round(daily.temperature_2m_min[0] ?? 0)}°</p>
+              <p class="mt-1 font-black" dir="ltr"><bdi dir="ltr">{Math.round(daily.temperature_2m_max[0] ?? 0)}° / {Math.round(daily.temperature_2m_min[0] ?? 0)}°</bdi></p>
             </div>
           </div>
           <dl class="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <div class="rounded-2xl bg-green-50 p-4"><dt class="text-xs font-bold text-green-800">محسوس درجہ حرارت</dt><dd class="mt-1 font-black text-green-950" dir="ltr">{Math.round(current.apparent_temperature)}°C</dd></div>
-            <div class="rounded-2xl bg-green-50 p-4"><dt class="text-xs font-bold text-green-800">نمی</dt><dd class="mt-1 font-black text-green-950" dir="ltr">{Math.round(current.relative_humidity_2m)}%</dd></div>
-            <div class="rounded-2xl bg-green-50 p-4"><dt class="text-xs font-bold text-green-800">ہوا</dt><dd class="mt-1 font-black text-green-950" dir="ltr">{Math.round(current.wind_speed_10m)} کلومیٹر/گھنٹہ</dd></div>
-            <div class="rounded-2xl bg-green-50 p-4"><dt class="text-xs font-bold text-green-800">بارش</dt><dd class="mt-1 font-black text-green-950" dir="ltr">{current.precipitation > 0 ? `${current.precipitation} ملی میٹر` : 'نہیں'}</dd></div>
+            <div class="rounded-2xl bg-green-50 p-4"><dt class="text-xs font-bold text-green-800">محسوس درجہ حرارت</dt><dd class="mt-1 font-black text-green-950" dir="ltr"><bdi dir="ltr">{Math.round(current.apparent_temperature)}°C</bdi></dd></div>
+            <div class="rounded-2xl bg-green-50 p-4"><dt class="text-xs font-bold text-green-800">نمی</dt><dd class="mt-1 font-black text-green-950" dir="ltr"><bdi dir="ltr">{Math.round(current.relative_humidity_2m)}%</bdi></dd></div>
+            <div class="rounded-2xl bg-green-50 p-4"><dt class="text-xs font-bold text-green-800">ہوا</dt><dd class="mt-1 font-black text-green-950" dir="ltr"><bdi dir="ltr">{Math.round(current.wind_speed_10m)}</bdi> کلومیٹر/گھنٹہ</dd></div>
+            <div class="rounded-2xl bg-green-50 p-4"><dt class="text-xs font-bold text-green-800">بارش</dt><dd class="mt-1 font-black text-green-950" dir="ltr">{current.precipitation > 0 ? <><bdi dir="ltr">{current.precipitation}</bdi> ملی میٹر</> : 'نہیں'}</dd></div>
           </dl>
-          <p class="mt-5 text-sm leading-7 text-slate-600">طلوع آفتاب: <strong>{formatTimeHM(daily.sunrise[0] ?? '')}</strong> • غروب آفتاب: <strong>{formatTimeHM(daily.sunset[0] ?? '')}</strong></p>
+          <p class="mt-5 text-sm leading-7 text-slate-600">طلوع آفتاب: <strong><bdi dir="ltr">{formatTimeHM(daily.sunrise[0])}</bdi></strong> • غروب آفتاب: <strong><bdi dir="ltr">{formatTimeHM(daily.sunset[0])}</bdi></strong></p>
         </article>
         <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {daily.time.map((t, i) => (
             <article class="card p-5">
               <p class="text-sm font-black text-green-950">{formatDayLabel(t)}</p>
               <p class="mt-2 font-bold text-green-900">{weatherCodeIcon(daily.weather_code[i] ?? 0)} {weatherCodeText(daily.weather_code[i] ?? 0)}</p>
-              <p class="mt-2 font-black text-green-950" dir="ltr">{Math.round(daily.temperature_2m_max[i] ?? 0)}° / {Math.round(daily.temperature_2m_min[i] ?? 0)}°</p>
-              <p class="mt-1 text-xs text-slate-500">بارش کا امکان: {daily.precipitation_probability_max[i] ?? 0}%</p>
+              <p class="mt-2 font-black text-green-950" dir="ltr"><bdi dir="ltr">{Math.round(daily.temperature_2m_max[i] ?? 0)}° / {Math.round(daily.temperature_2m_min[i] ?? 0)}°</bdi></p>
+              <p class="mt-1 text-xs text-slate-500">بارش کا امکان: <bdi dir="ltr">{daily.precipitation_probability_max[i]}%</bdi></p>
             </article>
           ))}
         </div>
       </div>
-      <p class="mt-5 text-xs leading-6 text-slate-500">موسم کی معلومات تقریباً 30 منٹ تک تازہ رہتی ہیں۔ سفر سے پہلے ہمیشہ مقامی ذرائع سے تازہ پیشن گوئی کی تصدیق کریں۔</p>
+      <p class="mt-5 text-xs leading-6 text-slate-500">Open-Meteo کی ماڈل پیش گوئی؛ یہ پارک کے کھلنے یا بند ہونے کی اطلاع نہیں۔ ذریعہ وقت: <bdi dir="ltr">{current.time} (Asia/Karachi)</bdi> · <a class="underline" href="https://open-meteo.com/">Open-Meteo</a></p>
     </div>
   </section>
 )}
+
+{!weather && <section id="موسم" class="shell py-16"><h2 class="section-title">موسم کی معلومات دستیاب نہیں</h2><p class="mt-5">تازہ اور مکمل پیش گوئی کی تصدیق نہیں ہو سکی۔ کوئی پرانا یا اندازاً عدد موجودہ موسم کے طور پر نہیں دکھایا جا رہا۔ دوبارہ صفحہ کھولیں یا <a class="underline" href="https://www.pmd.gov.pk/">محکمہ موسمیات پاکستان</a> کی اطلاع دیکھیں۔</p></section>}

@@ -1,10 +1,11 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "jinnah-park-rawalpindi-guide",
-  "main": "@astrojs/cloudflare/entrypoints/server",
+  "name": "jinnahpark",
+  "main": "./src/worker.js",
   "compatibility_date": "2026-09-01",
   "assets": {
     "binding": "ASSETS",
-    "directory": "./dist"
+    "directory": "./dist/client",
+    "run_worker_first": true
   }
 }

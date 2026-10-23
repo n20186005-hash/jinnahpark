@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "astro dev",
     "check": "astro check",
-    "build": "astro build",
+    "build": "astro build && node scripts/sanitize-worker-output.mjs",
     "preview": "astro preview",
     "deploy": "pnpm build && wrangler deploy"
   },
